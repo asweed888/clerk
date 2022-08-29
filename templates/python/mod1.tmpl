@@ -1,0 +1,10 @@
+{{ range _, $mod2 := .Upstreams -}}
+import clerk.{{ .Name }}.{{ $mod2.Name }}
+{{ end -}}
+
+
+def Clerk(location):
+    match location:
+        {{ range _, $mod2 := .Upstreams -}}
+        case {{ printf "%q" .Name }}: return clerk.{{ .mod1.Name }}.{{ $mod2.Name }}.Clerk
+        {{ end -}}
