@@ -1,4 +1,4 @@
-package tmpl
+package load
 
 import (
 	"fmt"
@@ -6,19 +6,19 @@ import (
 )
 
 
-func ModTmpl(level string) func(string) (string, error) {
+func TemplateFile(modLevel string) func(string) (string, error) {
     return func (lang string) (string, error) {
         var tmplFilePath string
         switch lang {
             case "python":
-                tmplFilePath = fmt.Sprintf("./templates/python/%s.tmpl", level)
+                tmplFilePath = fmt.Sprintf("./templates/python/%s.tmpl", modLevel)
             default:
                 return "", fmt.Errorf("ERROR: 無効な言語が指定されています。")
         }
 
         rawdata, err := ioutil.ReadFile(tmplFilePath)
         if err != nil {
-            return "", fmt.Errorf("ERROR: mod1.tmplを読み込めませんでした。")
+            return "", fmt.Errorf("ERROR: %s.tmplを読み込めませんでした。", modLevel)
         }
 
         return string(rawdata), nil

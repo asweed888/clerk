@@ -6,3 +6,10 @@ spec:
       upstreams:
         - name: main
           comment: "main処理のdraft"
+
+- name: proc
+  upstreams:
+    - name: run
+      upstreams:
+        - name: main
+          comment: "main処理"
