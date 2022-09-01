@@ -1,7 +1,6 @@
 package update
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"regexp"
@@ -15,9 +14,7 @@ func Mod3(filePath string, newComment string) error {
 	}
 
     fileContents := string(bytes)
-    fmt.Println(fileContents)
     fileContents = replaceTarget.ReplaceAllString(fileContents, newComment)
-    fmt.Println(fileContents)
     
     err = ioutil.WriteFile(filePath, []byte(fileContents), os.ModePerm)
     if err != nil {
