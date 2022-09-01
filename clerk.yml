@@ -5,11 +5,16 @@ spec:
     - name: run
       upstreams:
         - name: main
-          comment: "main処理のdraft"
+          comment: "テスト2"
 
-- name: proc
+- name: demo
   upstreams:
     - name: run
       upstreams:
-        - name: main
-          comment: "main処理"
+        - name: test
+          comment: "テスト用: テストですが何か？と喧嘩口調に変更"
+        - name: dev
+          comment: "開発用"
+        - name: staging
+          comment: "ステージング用"
+
