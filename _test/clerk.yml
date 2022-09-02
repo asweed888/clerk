@@ -1,0 +1,11 @@
+lang: python
+spec:
+- name: proc
+  upstreams:
+    - name: run
+      upstreams:
+        - name: test
+          comment: |-
+            buildされたclerk_testをテスト中
+            改行ありコメントも合わせてテスト
+            この階層のclerkディレクトリもgitignoreする
