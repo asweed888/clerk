@@ -5,7 +5,4 @@ spec:
     - name: run
       upstreams:
         - name: test
-          comment: |-
-            buildされたclerk_testをテスト中
-            改行ありコメントも合わせてテスト
-            この階層のclerkディレクトリもgitignoreする
+          comment: printで「テストです」と書き出す
