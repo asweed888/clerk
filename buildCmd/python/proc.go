@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/asweed888/clerk/buildCmd/python/create"
-	"github.com/asweed888/clerk/buildCmd/python/load"
+	"github.com/asweed888/clerk/buildCmd/python/get"
 	"github.com/asweed888/clerk/buildCmd/python/update"
 	"github.com/asweed888/clerk/schema"
 )
@@ -17,39 +17,32 @@ func Proc(scm *schema.ClerkYaml) error {
     for _, mod1 := range scm.Spec {
 
         modFilePath = "./clerk/%s/__init__.py"
-        
+
         // mod1の階層のディレクトリを作成
         if err := create.ModuleDirectory(mod1.Name); err != nil {
            return err
         }
 
-        tmplTxt, err := load.TemplateFile("mod1")
+        err := create.Module(
+            fmt.Sprintf(modFilePath, mod1.Name),
+            get.ModuleTemplate("mod1"),
+            mod1,
+        )
         if err != nil {
             return err
         }
 
-        err = create.Module(
-            fmt.Sprintf(modFilePath, mod1.Name),
-            tmplTxt,
-            mod1,
-        )
-
         for _, mod2 := range mod1.Upstreams {
-            
+
             modFilePath = "./clerk/%s/%s/__init__.py"
-            
+
             if err := create.ModuleDirectory(mod1.Name, mod2.Name); err != nil {
                return err
             }
 
-            tmplTxt, err := load.TemplateFile("mod2")
-            if err != nil {
-                return err
-            }
-
             err = create.Module(
                 fmt.Sprintf(modFilePath, mod1.Name, mod2.Name),
-                tmplTxt,
+                get.ModuleTemplate("mod2"),
                 map[string]interface{}{
                     "Mod1": mod1,
                     "Mod2": mod2,
@@ -66,14 +59,10 @@ func Proc(scm *schema.ClerkYaml) error {
                 if _, err := os.Stat(
                     fmt.Sprintf(modFilePath, mod1.Name, mod2.Name, mod3.Name),
                 ); err != nil {
-                    tmplTxt, err := load.TemplateFile("mod3")
-                    if err != nil {
-                        return err
-                    }
 
                     err = create.Module(
                         fmt.Sprintf(modFilePath, mod1.Name, mod2.Name, mod3.Name),
-                        tmplTxt,
+                        get.ModuleTemplate("mod3"),
                         map[string]interface{}{
                             "Mod1": mod1,
                             "Mod2": mod2,
