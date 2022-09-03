@@ -15,7 +15,7 @@ func main(){
     app.Usage = cmd.BuildCommand.Usage
     app.Description = "Comming soon!"
     app.Flags = cmd.BuildCommand.Flags
-    app.Version = "v0.0.0"
+    app.Version = "v0.0.1"
     app.Action = cmd.BuildCommand.Action
     app.Commands = []*cli.Command{
         cmd.BuildCommand,
