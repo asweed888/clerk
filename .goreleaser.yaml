@@ -43,3 +43,19 @@ archives:
         format: zip
 release:
   prerelease: auto
+brews:
+  - name: clerk
+    tap: # HomeBrew Tapをリリースするリポジトリ
+      owner: asweed888
+      name: clerk
+    # ここは決め打ちで良い
+    url_template: "https://github.com/asweed888/clerk/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_author: # homebrew-tapにcommitするときに使うGitHubアカウント
+      name: inadati
+      email: dr.inadati@gmail.com
+    homepage: "https://github.com/asweed888/clerk"
+    description: "Declarative development framework clerk"     # 適当なdescription
+    test: | # リリースビルド後の動作確認用のコマンド。--versionやhelpなどを指定すればよいだろう
+      system "#{bin}/clerk help"
+    install: |  # Goならばバイナリ名でOK
+      bin.install "clerk"
