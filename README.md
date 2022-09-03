@@ -6,21 +6,25 @@ Also, it is still unknown how `clerk` will solve development problems.
 However, `clerk`'s approach to development, declarative development,   
 has the potential to make source code more maintainable in that it is implemented while writing specifications.
 
-# feature
+## feature
 
 - Declarative Development
 - Support for multiple dynamically typed languages (currently only python)
 
-# installation
+## installation
 
-** for Mac OS **  
+**for Mac OS**  
 
 ```
 brew tap asweed888/homebrew-clerk
 brew install clerk
 ```
 
-** other **  
+**other**  
 
 It can be installed from the release page.  
 https://github.com/asweed888/clerk/releases
+
+## Usage
+The use of **clerk** is very simple.
+All you need to do is create a file called **clerk.yml** and describe a simple structure.
