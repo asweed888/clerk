@@ -8,6 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+var Version string
+
 func main(){
 
     app := cli.NewApp()
@@ -15,7 +17,7 @@ func main(){
     app.Usage = cmd.BuildCommand.Usage
     app.Description = "Comming soon!"
     app.Flags = cmd.BuildCommand.Flags
-    app.Version = "v0.0.1"
+    app.Version = Version
     app.Action = cmd.BuildCommand.Action
     app.Commands = []*cli.Command{
         cmd.BuildCommand,
