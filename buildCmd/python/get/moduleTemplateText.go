@@ -8,9 +8,9 @@ import clerk.{{ $mod1_name }}.{{ .Name }}
 {{ printf "\n" -}}
 def Clerk(location):
     match location:
-        {{ range .Upstreams -}}
-        case {{ printf "%q" .Name }}: return clerk.{{ $mod1_name }}.{{ .Name }}.Clerk
-        {{- end -}}{{- printf "\n" -}}`
+{{ range .Upstreams -}}
+{{"        "}}case {{ printf "%q" .Name }}: return clerk.{{ $mod1_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{- end -}}`
 
 var mod2Template = `{{ $mod1_name := .Mod1.Name -}}
 {{ $mod2_name := .Mod2.Name -}}
@@ -21,9 +21,9 @@ import clerk.{{ $mod1_name }}.{{ $mod2_name }}.{{ .Name }}
 {{ printf "\n" -}}
 def Clerk(location):
     match location:
-        {{ range .Mod2.Upstreams -}}
-        case {{ printf "%q" .Name }}: return clerk.{{ $mod1_name }}.{{ $mod2_name }}.{{ .Name }}.Clerk
-        {{- end -}}{{- printf "\n" -}}`
+{{ range .Mod2.Upstreams -}}
+{{"        "}}case {{ printf "%q" .Name }}: return clerk.{{ $mod1_name }}.{{ $mod2_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{- end -}}`
 
 var mod3Template = `""" <location: {{ .Mod1.Name }}.{{ .Mod2.Name }}.{{ .Mod3.Name }} />
 
