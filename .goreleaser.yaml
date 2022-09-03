@@ -47,7 +47,7 @@ brews:
   - name: clerk
     tap: # HomeBrew Tapをリリースするリポジトリ
       owner: asweed888
-      name: clerk
+      name: homebrew-tap
     # ここは決め打ちで良い
     url_template: "https://github.com/asweed888/clerk/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     commit_author: # homebrew-tapにcommitするときに使うGitHubアカウント
