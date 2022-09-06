@@ -1,13 +1,15 @@
 lang: python
 spec:
-- name: test
+- location: clerk1
+  name: test
   upstreams:
     - name: run
       upstreams:
         - name: main
           comment: "テスト2"
 
-- name: demo
+- location: clerk2
+  name: demo
   upstreams:
     - name: run
       upstreams:
@@ -17,4 +19,3 @@ spec:
           comment: "開発用"
         - name: staging
           comment: "ステージング用"
-
