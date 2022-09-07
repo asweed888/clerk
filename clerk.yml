@@ -1,21 +1,10 @@
 lang: python
 spec:
-- location: clerk1
-  name: test
-  upstreams:
-    - name: run
+- location: v1
+  modules:
+    - name: proc
       upstreams:
-        - name: main
-          comment: "テスト2"
-
-- location: clerk2
-  name: demo
-  upstreams:
-    - name: run
-      upstreams:
-        - name: test
-          comment: "テスト用: テストですが何か？と喧嘩口調に変更"
-        - name: dev
-          comment: "開発用"
-        - name: staging
-          comment: "ステージング用"
+        - name: run
+          upstreams:
+            - name: test
+              comment: メインプロセスのtest
