@@ -8,12 +8,12 @@ import (
 
 
 func ModuleDirectory(dirs ...string) error {
-    if len(dirs) >= 2 {
-        if err := os.MkdirAll(fmt.Sprintf("clerk/%s/%s", dirs[0], dirs[1]), os.ModePerm); err != nil {
+    if len(dirs) >= 3 {
+        if err := os.MkdirAll(fmt.Sprintf("%s/%s/%s", dirs[0], dirs[1], dirs[2]), os.ModePerm); err != nil {
             return err
         }
     } else {
-        if err := os.MkdirAll(fmt.Sprintf("clerk/%s", dirs[0]), os.ModePerm); err != nil {
+        if err := os.MkdirAll(fmt.Sprintf("%s/%s", dirs[0], dirs[1]), os.ModePerm); err != nil {
             return err
         }
     }
