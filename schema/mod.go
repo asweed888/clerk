@@ -11,14 +11,17 @@ import (
 type ClerkYaml struct {
 	Lang string `yaml:"lang"`
 	Spec []struct {
-		Name      string `yaml:"name"`
-		Upstreams []struct {
+		Location string `yaml:"location"`
+		Modules  []struct {
 			Name      string `yaml:"name"`
 			Upstreams []struct {
-				Name    string `yaml:"name"`
-				Comment string `yaml:"comment"`
+				Name      string `yaml:"name"`
+				Upstreams []struct {
+					Name    string `yaml:"name"`
+					Comment string `yaml:"comment"`
+				} `yaml:"upstreams"`
 			} `yaml:"upstreams"`
-		} `yaml:"upstreams"`
+		} `yaml:"modules"`
 	} `yaml:"spec"`
 }
 

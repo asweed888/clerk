@@ -1,10 +1,10 @@
 lang: python
 spec:
-- location: v1
+- location: demonstration
   modules:
-    - name: proc
-      upstreams:
-        - name: run
-          upstreams:
-            - name: test
-              comment: メインプロセスのtest
+  - name: proc
+    upstreams:
+      - name: run
+        upstreams:
+          - name: test
+            comment: メインプロセスのtest
