@@ -21,15 +21,23 @@ var BuildCommand = &cli.Command{
     Action: func(c *cli.Context) error {
 
         //clerk.ymlの読み込み
-        scm, _ := schema.Load()
+        scm, err := schema.Load()
+        if err != nil {
+            return err
+        }
         switch scm.Lang {
             case "python":
-                python.Proc(scm)
+                err = python.Proc(scm)
             case "commonjs":
-                commonjs.Proc(scm)
+                err = commonjs.Proc(scm)
             default:
                 return fmt.Errorf("対応していない言語が指定されています。")
         }
+
+        if err != nil {
+            return err
+        }
+
         return nil
     },
 }
