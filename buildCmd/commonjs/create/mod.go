@@ -7,7 +7,7 @@ import (
 )
 
 
-func ModuleDirectory(dirs ...string) error {
+func Directory(dirs ...string) error {
     if len(dirs) >= 3 {
         if err := os.MkdirAll(fmt.Sprintf("%s/%s/%s", dirs[0], dirs[1], dirs[2]), os.ModePerm); err != nil {
             return err
@@ -19,8 +19,6 @@ func ModuleDirectory(dirs ...string) error {
     }
     return nil
 }
-
-
 
 func Module(outFilePath string, tmplTxt string, inputData interface{}) error {
     tmpl, err := template.New("clerk").Parse(tmplTxt)
@@ -40,4 +38,13 @@ func Module(outFilePath string, tmplTxt string, inputData interface{}) error {
 
 
 	return nil
+}
+
+func Mod3Comment(location string, mod1Name string, mod2Name string, mod3Name string, comment string) string {
+    f := `/* <location: %s.%s.%s.%s />
+
+%s
+
+*/`
+    return fmt.Sprintf(f, location,  mod1Name, mod2Name, mod3Name, comment)
 }

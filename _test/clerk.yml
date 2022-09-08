@@ -1,8 +1,13 @@
-lang: python
+lang: commonjs
 spec:
-- name: proc
-  upstreams:
-    - name: run
-      upstreams:
-        - name: test
-          comment: printで「テストです」と書き出す
+- location: clerk
+  modules:
+  - name: greet
+    upstreams:
+      - name: put
+        upstreams:
+          - name: japanese
+            comment: 日本語で挨拶
+
+          - name: english
+            comment: 英語で挨拶

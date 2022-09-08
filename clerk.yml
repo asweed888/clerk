@@ -1,6 +1,6 @@
-lang: python
+lang: commonjs
 spec:
-- location: demonstration
+- location: clerk
   modules:
   - name: proc
     upstreams:
@@ -8,3 +8,6 @@ spec:
         upstreams:
           - name: test
             comment: メインプロセスのtest
+
+          - name: main
+            comment: メインプロセス

@@ -1,13 +1,13 @@
 package get
 
-var mod1Template = `{{ range .Upstreams -}}
+var mod1Template = `{{ range .Mod1.Upstreams -}}
 const _{{.Name}} = require("./{{ .Name }}")
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
 module.exports.Clerk = (location) => {
     switch (location) {
-{{ range .Upstreams -}}
+{{ range .Mod1.Upstreams -}}
 {{"        "}}case {{ printf "%q" .Name }}: return _{{.Name}}.Clerk{{- printf "\n"}}
 {{- end -}}
 {{"    "}}}
@@ -26,7 +26,8 @@ module.exports.Clerk = (location) => {
 {{"    "}}}
 }`
 
-var mod3Template = `/* <location: {{ .Mod1.Name }}.{{ .Mod2.Name }}.{{ .Mod3.Name }} />
+var mod3Template = `{{ $location := .Location -}}
+/* <location: {{ $location }}.{{ .Mod1.Name }}.{{ .Mod2.Name }}.{{ .Mod3.Name }} />
 
 {{.Mod3.Comment}}
 
