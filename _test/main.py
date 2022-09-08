@@ -1,5 +1,5 @@
-from clerk import proc
+from clerk import greet
 
 
 if __name__ == "__main__":
-    proc.Clerk("run")("test")()
+    print(greet.Clerk("put")("english")())

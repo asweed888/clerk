@@ -15,7 +15,7 @@ func Mod3(filePath string, newComment string) error {
 
     fileContents := string(bytes)
     fileContents = replaceTarget.ReplaceAllString(fileContents, newComment)
-    
+
     err = ioutil.WriteFile(filePath, []byte(fileContents), os.ModePerm)
     if err != nil {
         return err
