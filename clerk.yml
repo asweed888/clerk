@@ -1,13 +1,10 @@
-lang: commonjs
+lang: python
 spec:
-- location: clerk
+- location: greeting
   modules:
-  - name: proc
+  - name: get
     upstreams:
-      - name: run
+      - name: ja
         upstreams:
-          - name: test
-            comment: メインプロセスのtest
-
-          - name: main
-            comment: メインプロセス
+          - name: listAll
+            comment: 日本語のあいさつ一覧を取得
