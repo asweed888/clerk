@@ -3,19 +3,13 @@ package create
 import (
 	"fmt"
 	"os"
+	"strings"
 	"text/template"
 )
 
-
 func Directory(dirs ...string) error {
-    if len(dirs) >= 3 {
-        if err := os.MkdirAll(fmt.Sprintf("%s/%s/%s", dirs[0], dirs[1], dirs[2]), os.ModePerm); err != nil {
-            return err
-        }
-    } else {
-        if err := os.MkdirAll(fmt.Sprintf("%s/%s", dirs[0], dirs[1]), os.ModePerm); err != nil {
-            return err
-        }
+    if err := os.MkdirAll(strings.Join(dirs, "/"), os.ModePerm); err != nil {
+        return err
     }
     return nil
 }

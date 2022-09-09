@@ -1,13 +1,10 @@
-lang: commonjs
+lang: python
 spec:
-- location: clerk
+- location: greeting
   modules:
-  - name: greet
+  - name: get
     upstreams:
-      - name: put
+      - name: ja
         upstreams:
-          - name: japanese
-            comment: 日本語で挨拶
-
-          - name: english
-            comment: 英語で挨拶
+          - name: listAll
+            comment: 日本語のあいさつ一覧を取得

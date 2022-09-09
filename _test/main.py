@@ -1,5 +1,5 @@
-from clerk import greet
+import greeting
 
 
 if __name__ == "__main__":
-    print(greet.Clerk("put")("english")())
+    print(greeting.Clerk("get")("ja")("listAll")())

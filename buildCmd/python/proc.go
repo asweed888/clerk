@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/asweed888/clerk/buildCmd/python/update"
 	"github.com/asweed888/clerk/buildCmd/python/create"
 	"github.com/asweed888/clerk/buildCmd/python/get"
+	"github.com/asweed888/clerk/buildCmd/python/update"
 	"github.com/asweed888/clerk/schema"
 )
 
@@ -14,6 +14,27 @@ func Proc(scm *schema.ClerkYaml) error {
 
     for _, clerk := range scm.Spec {
         location := clerk.Location
+        modFilePath := fmt.Sprintf(
+            "./%s/__init__.py",
+            location,
+        )
+
+        // clerkRootのためのディレクトリを作成
+        if err := create.Directory(location); err != nil {
+            return err
+        }
+
+        // clerkRootのモジュールを作成
+        err := create.Module(
+            modFilePath,
+            get.ModuleTemplate("clerkRoot"),
+            map[string]interface{}{
+                "Clerk": clerk,
+            },
+        )
+        if err != nil {
+            return err
+        }
 
         for _, mod1 := range clerk.Modules {
 
