@@ -1,5 +1,18 @@
 package get
 
+var clerkRootTemplate = `{{ $location := .Clerk.Location -}}
+{{ range .Clerk.Modules -}}
+import {{ $location }}.{{ .Name }}
+{{ end -}}
+{{ printf "\n" -}}
+{{ printf "\n" -}}
+def Clerk(location):
+    match location:
+{{ range .Clerk.Modules -}}
+{{"        "}}case {{ printf "%q" .Name }}: return {{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{- end -}}
+`
+
 var mod1Template = `{{ $location := .Location -}}
 {{ $mod1_name := .Mod1.Name -}}
 {{ range .Mod1.Upstreams -}}
@@ -40,6 +53,7 @@ def Clerk():
 
 func ModuleTemplate(modLevel string) string {
     tmpl := map[string]string{
+        "clerkRoot": clerkRootTemplate,
         "mod1": mod1Template,
         "mod2": mod2Template,
         "mod3": mod3Template,
