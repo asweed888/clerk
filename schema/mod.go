@@ -15,11 +15,8 @@ type ClerkYaml struct {
 		Modules  []struct {
 			Name      string `yaml:"name"`
 			Upstreams []struct {
-				Name      string `yaml:"name"`
-				Upstreams []struct {
-					Name    string `yaml:"name"`
-					Comment string `yaml:"comment"`
-				} `yaml:"upstreams"`
+				Name    string `yaml:"name"`
+				Comment string `yaml:"comment"`
 			} `yaml:"upstreams"`
 		} `yaml:"modules"`
 	} `yaml:"spec"`

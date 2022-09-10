@@ -12,131 +12,109 @@ import (
 
 func Proc(scm *schema.ClerkYaml) error {
 
-    for _, clerk := range scm.Spec {
-        location := clerk.Location
+    for _, mod0 := range scm.Spec {
         modFilePath := fmt.Sprintf(
-            "./%s/__init__.py",
-            location,
+            "./clerk/%s/__init__.py",
+            mod0.Location,
         )
 
-        // clerkRootのためのディレクトリを作成
-        if err := create.Directory(location); err != nil {
+        // mod0のためのディレクトリを作成
+        if err := create.Directory("clerk", mod0.Location); err != nil {
             return err
         }
 
-        // clerkRootのモジュールを作成
-        err := create.Module(
+        // mod0のmoduleを作成
+        if err := create.Module(
             modFilePath,
-            get.ModuleTemplate("clerkRoot"),
+            get.ModuleTemplate("mod0"),
             map[string]interface{}{
-                "Clerk": clerk,
+                "Mod0": mod0,
             },
-        )
-        if err != nil {
-            return err
-        }
+        ); err != nil { return err }
 
-        for _, mod1 := range clerk.Modules {
+        for _, mod1 := range mod0.Modules {
 
             modFilePath := fmt.Sprintf(
-                "./%s/%s/__init__.py",
-                location,
+                "./clerk/%s/%s/__init__.py",
+                mod0.Location,
                 mod1.Name,
             )
 
             // mod1のためのディレクトリを作成
-            if err := create.Directory(location, mod1.Name); err != nil {
+            if err := create.Directory("clerk", mod0.Location, mod1.Name); err != nil {
                 return err
             }
 
             // mod1を作成
-            err := create.Module(
+            if err := create.Module(
                 modFilePath,
                 get.ModuleTemplate("mod1"),
                 map[string]interface{}{
-                    "Location": location,
+                    "Mod0": mod0,
                     "Mod1": mod1,
                 },
-            )
-            if err != nil {
+            ); err != nil {
                 return err
             }
 
             for _, mod2 := range mod1.Upstreams {
 
                 modFilePath := fmt.Sprintf(
-                    "./%s/%s/%s/__init__.py",
-                    location,
+                    "./clerk/%s/%s/%s.py",
+                    mod0.Location,
                     mod1.Name,
                     mod2.Name,
                 )
 
                 // mod2のためのディレクトリを作成
-                if err := create.Directory(location, mod1.Name, mod2.Name); err != nil {
+                if err := create.Directory("clerk", mod0.Location, mod1.Name, mod2.Name); err != nil {
                     return err
                 }
 
+                // moduleのファイルが存在していない場合
+                if _, err := os.Stat(modFilePath); err != nil {
+
+                    if err := create.Module(
+                        modFilePath,
+                        get.ModuleTemplate("mod2"),
+                        map[string]interface{}{
+                            "Mod0": mod0,
+                            "Mod1": mod1,
+                            "Mod2": mod2,
+                        },
+                    ); err != nil {
+                        return nil
+                    }
+
+                // moduleのファイルが存在している場合
+                } else {
+
+                    if err := update.EndMod(
+                        modFilePath,
+                        create.EndModComment(
+                            mod0.Location,
+                            mod1.Name,
+                            mod2.Name,
+                            mod2.Comment,
+                        ),
+                    ); err != nil {
+                        return nil
+                    }
+
+                } //end if
+
                 // mod2を作成
-                err := create.Module(
+                if err := create.Module(
                     modFilePath,
                     get.ModuleTemplate("mod2"),
                     map[string]interface{}{
-                        "Location": location,
+                        "Mod0": mod0,
                         "Mod1": mod1,
                         "Mod2": mod2,
                     },
-                )
-                if err != nil {
+                ); err != nil {
                     return err
                 }
-
-                for _, mod3 := range mod2.Upstreams {
-
-                    modFilePath := fmt.Sprintf(
-                        "./%s/%s/%s/%s.py",
-                        location,
-                        mod1.Name,
-                        mod2.Name,
-                        mod3.Name,
-                    )
-
-                    // moduleのファイルが存在していない場合
-                    if _, err := os.Stat(modFilePath); err != nil {
-
-                        err := create.Module(
-                            modFilePath,
-                            get.ModuleTemplate("mod3"),
-                            map[string]interface{}{
-                                "Location": location,
-                                "Mod1": mod1,
-                                "Mod2": mod2,
-                                "Mod3": mod3,
-                            },
-                        )
-                        if err != nil {
-                            return nil
-                        }
-
-                    // moduleのファイルが存在している場合
-                    } else {
-
-                        err := update.Mod3(
-                            modFilePath,
-                            create.Mod3Comment(
-                                location,
-                                mod1.Name,
-                                mod2.Name,
-                                mod3.Name,
-                                mod3.Comment,
-                            ),
-                        )
-                        if err != nil {
-                            return nil
-                        }
-
-                    } //end if
-
-                } //end for
 
             } // end for
 

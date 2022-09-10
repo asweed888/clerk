@@ -1,10 +1,8 @@
 lang: python
 spec:
-- location: greeting
+- location: proc
   modules:
-  - name: get
+  - name: run
     upstreams:
-      - name: ja
-        upstreams:
-          - name: listAll
-            comment: 日本語のあいさつ一覧を取得
+      - name: test
+        comment: テスト

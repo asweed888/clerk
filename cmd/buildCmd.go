@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/asweed888/clerk/buildCmd/commonjs"
 	"github.com/asweed888/clerk/buildCmd/python"
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
@@ -28,8 +27,8 @@ var BuildCommand = &cli.Command{
         switch scm.Lang {
             case "python":
                 err = python.Proc(scm)
-            case "commonjs":
-                err = commonjs.Proc(scm)
+            // case "commonjs":
+            //     err = commonjs.Proc(scm)
             default:
                 return fmt.Errorf("対応していない言語が指定されています。")
         }

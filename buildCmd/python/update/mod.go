@@ -6,7 +6,7 @@ import (
 	"regexp"
 )
 
-func Mod3(filePath string, newComment string) error {
+func EndMod(filePath string, newComment string) error {
     replaceTarget := regexp.MustCompile(`""" <location:[\s\S\n]*"""`)
     bytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
