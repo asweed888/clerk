@@ -66,11 +66,6 @@ func Proc(scm *schema.ClerkYaml) error {
                     mod2.Name,
                 )
 
-                // mod2のためのディレクトリを作成
-                if err := create.Directory("clerk", mod0.Location, mod1.Name, mod2.Name); err != nil {
-                    return err
-                }
-
                 // moduleのファイルが存在していない場合
                 if _, err := os.Stat(modFilePath); err != nil {
 
