@@ -98,19 +98,6 @@ func Proc(scm *schema.ClerkYaml) error {
 
                 } //end if
 
-                // mod2を作成
-                if err := create.Module(
-                    modFilePath,
-                    get.ModuleTemplate("mod2"),
-                    map[string]interface{}{
-                        "Mod0": mod0,
-                        "Mod1": mod1,
-                        "Mod2": mod2,
-                    },
-                ); err != nil {
-                    return err
-                }
-
             } // end for
 
         } // end for
