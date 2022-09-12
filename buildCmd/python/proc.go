@@ -32,7 +32,7 @@ func Proc(scm *schema.ClerkYaml) error {
             },
         ); err != nil { return err }
 
-        for _, mod1 := range mod0.Modules {
+        for _, mod1 := range mod0.Services {
 
             modFilePath := fmt.Sprintf(
                 "./clerk/%s/%s/__init__.py",

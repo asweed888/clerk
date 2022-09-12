@@ -1,7 +1,7 @@
 lang: python
 spec:
 - location: proc
-  modules:
+  services:
   - name: run
     upstreams:
       - name: test
