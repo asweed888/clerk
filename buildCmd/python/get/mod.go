@@ -1,14 +1,14 @@
 package get
 
 var mod0Template = `{{ $location := .Mod0.Location -}}
-{{ range .Mod0.Modules -}}
+{{ range .Mod0.Services -}}
 import clerk.{{ $location }}.{{ .Name }}
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
 def Clerk(location):
     match location:
-{{ range .Mod0.Modules -}}
+{{ range .Mod0.Services -}}
 {{"        "}}case {{ printf "%q" .Name }}: return clerk.{{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
 {{- end -}}`
 

@@ -12,13 +12,13 @@ type ClerkYaml struct {
 	Lang string `yaml:"lang"`
 	Spec []struct {
 		Location string `yaml:"location"`
-		Modules  []struct {
+		Services  []struct {
 			Name      string `yaml:"name"`
 			Upstreams []struct {
 				Name    string `yaml:"name"`
 				Comment string `yaml:"comment"`
 			} `yaml:"upstreams"`
-		} `yaml:"modules"`
+		} `yaml:"services"`
 	} `yaml:"spec"`
 }
 
