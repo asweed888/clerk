@@ -15,7 +15,7 @@ func main(){
     app := cli.NewApp()
     app.Name = "clerk"
     app.Usage = cmd.BuildCommand.Usage
-    app.Description = "Comming soon!"
+    app.Description = "This is a very simple declarative development framework."
     app.Flags = cmd.BuildCommand.Flags
     app.Version = Version
     app.Commands = []*cli.Command{
