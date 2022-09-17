@@ -1,5 +1,5 @@
 lang: python
-downstream: hoge
+export: true
 spec:
 - location: proc
   services:

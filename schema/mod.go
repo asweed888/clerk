@@ -10,7 +10,7 @@ import (
 
 type ClerkYaml struct {
 	Lang string `yaml:"lang"`
-    Downstream string `yaml:"downstream"`
+    Export bool `yaml:"export"`
 	Spec []struct {
 		Location string `yaml:"location"`
 		Services  []struct {

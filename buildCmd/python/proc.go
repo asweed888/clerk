@@ -28,7 +28,7 @@ func Proc(scm *schema.ClerkYaml) error {
             modFilePath,
             get.ModuleTemplate("mod0"),
             map[string]interface{}{
-                "Schema": scm,
+                "ApiRoot": get.ApiRoot(scm.Export),
                 "Mod0": mod0,
             },
         ); err != nil { return err }
@@ -51,7 +51,7 @@ func Proc(scm *schema.ClerkYaml) error {
                 modFilePath,
                 get.ModuleTemplate("mod1"),
                 map[string]interface{}{
-                    "Schema": scm,
+                    "ApiRoot": get.ApiRoot(scm.Export),
                     "Mod0": mod0,
                     "Mod1": mod1,
                 },
