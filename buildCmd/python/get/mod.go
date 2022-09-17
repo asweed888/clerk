@@ -1,10 +1,24 @@
 package get
 
-var mod0Template = `{{ $downstream := .Schema.Downstream -}}
+import (
+	"os"
+	"path/filepath"
+)
+
+func ApiRoot(isExport bool) string {
+    wd, _ := os.Getwd()
+    if isExport {
+        return filepath.Base(wd)
+    } else {
+        return ""
+    }
+}
+
+var mod0Template = `{{ $apiRoot := .ApiRoot -}}
 {{ $location := .Mod0.Location -}}
-{{ if $downstream -}}
+{{ if $apiRoot -}}
 {{ range .Mod0.Services -}}
-import {{ $downstream }}.clerk.{{ $location }}.{{ .Name }}
+import {{ $apiRoot }}.clerk.{{ $location }}.{{ .Name }}
 {{ end -}}
 {{ else -}}
 {{ range .Mod0.Services -}}
@@ -15,9 +29,9 @@ import clerk.{{ $location }}.{{ .Name }}
 {{ printf "\n" -}}
 def Clerk(location):
     match location:
-{{ if $downstream -}}
+{{ if $apiRoot -}}
 {{ range .Mod0.Services -}}
-{{"        "}}case {{ printf "%q" .Name }}: return {{ $downstream }}.clerk.{{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerk.{{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
 {{- end -}}
 {{- else -}}
 {{ range .Mod0.Services -}}
@@ -26,12 +40,12 @@ def Clerk(location):
 {{- end -}}`
 
 
-var mod1Template = `{{ $downstream := .Schema.Downstream -}}
+var mod1Template = `{{ $apiRoot := .ApiRoot -}}
 {{ $location := .Mod0.Location -}}
 {{ $mod1_name := .Mod1.Name -}}
-{{ if $downstream -}}
+{{ if $apiRoot -}}
 {{ range .Mod1.Upstreams -}}
-import {{ $downstream }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}
+import {{ $apiRoot }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}
 {{ end -}}
 {{ else -}}
 {{ range .Mod1.Upstreams -}}
@@ -42,9 +56,9 @@ import clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}
 {{ printf "\n" -}}
 def Clerk(location):
     match location:
-{{ if $downstream -}}
+{{ if $apiRoot -}}
 {{ range .Mod1.Upstreams -}}
-{{"        "}}case {{ printf "%q" .Name }}: return {{ $downstream }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
 {{- end -}}
 {{- else -}}
 {{ range .Mod1.Upstreams -}}
