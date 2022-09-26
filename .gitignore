@@ -1,4 +1,4 @@
 .DS_Store
-clerk/*
+clerks/*
 _test/clerk_test
-_test/clerk
+_test/clerks

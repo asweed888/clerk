@@ -1,10 +1,22 @@
 lang: python
 spec:
-- location: greeting
-  modules:
-  - name: get
-    upstreams:
-      - name: ja
-        upstreams:
-          - name: listAll
-            comment: 日本語のあいさつ一覧を取得
+- location: html
+  upstreams:
+    - name: RaceSearchResultPage
+      comment: レース検索結果ページのhtmlアップデートアップデート
+      methods:
+        - get
+        - set
+
+
+- location: PageNation
+  upstreams:
+    - name: LimitPageNumber
+      comment: |-
+        ページ下部ページネーションの「最後」のaタグの
+        hrefを取得しhref内のpage=XXXXのXXXXのページ数を取得
+      methods:
+        - fetch
+        - clear
+        - get
+        - set

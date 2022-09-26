@@ -1,8 +1,10 @@
 package get
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
+	"text/template"
 )
 
 func ApiRoot(isExport bool) string {
@@ -17,72 +19,82 @@ func ApiRoot(isExport bool) string {
 var mod0Template = `{{ $apiRoot := .ApiRoot -}}
 {{ $location := .Mod0.Location -}}
 {{ if $apiRoot -}}
-{{ range .Mod0.Services -}}
-import {{ $apiRoot }}.clerk.{{ $location }}.{{ .Name }}
+{{ range .Mod0.Upstreams -}}
+import {{ $apiRoot }}.clerks.{{ $location }}.{{ .Name }}
 {{ end -}}
 {{ else -}}
-{{ range .Mod0.Services -}}
-import clerk.{{ $location }}.{{ .Name }}
+{{ range .Mod0.Upstreams -}}
+import clerks.{{ $location }}.{{ .Name }}
 {{ end -}}
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
-def Clerk(location):
+def clerk(location):
     match location:
 {{ if $apiRoot -}}
-{{ range .Mod0.Services -}}
-{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerk.{{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{ range .Mod0.Upstreams -}}
+{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerks.{{ $location }}.{{ .Name }}.clerk{{- printf "\n" -}}
 {{- end -}}
 {{- else -}}
-{{ range .Mod0.Services -}}
-{{"        "}}case {{ printf "%q" .Name }}: return clerk.{{ $location }}.{{ .Name }}.Clerk{{- printf "\n" -}}
+{{ range .Mod0.Upstreams -}}
+{{"        "}}case {{ printf "%q" .Name }}: return clerks.{{ $location }}.{{ .Name }}.clerk{{- printf "\n" -}}
 {{- end -}}
 {{- end -}}`
 
 
-var mod1Template = `{{ $apiRoot := .ApiRoot -}}
-{{ $location := .Mod0.Location -}}
-{{ $mod1_name := .Mod1.Name -}}
-{{ if $apiRoot -}}
-{{ range .Mod1.Upstreams -}}
-import {{ $apiRoot }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}
-{{ end -}}
-{{ else -}}
-{{ range .Mod1.Upstreams -}}
-import clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}
-{{ end -}}
-{{ end -}}
-{{ printf "\n" -}}
-{{ printf "\n" -}}
-def Clerk(location):
-    match location:
-{{ if $apiRoot -}}
-{{ range .Mod1.Upstreams -}}
-{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
-{{- end -}}
-{{- else -}}
-{{ range .Mod1.Upstreams -}}
-{{"        "}}case {{ printf "%q" .Name }}: return clerk.{{ $location }}.{{ $mod1_name }}.{{ .Name }}.Clerk{{- printf "\n" -}}
-{{- end -}}
-{{- end -}}`
+var mod1Template = `{{ $location := .Mod0.Location -}}
+""" <location: {{ $location }}.{{ .Mod1.Name }} />
 
-
-var mod2Template = `{{ $location := .Mod0.Location -}}
-""" <location: {{ $location }}.{{ .Mod1.Name }}.{{ .Mod2.Name }} />
-
-{{.Mod2.Comment}}
+{{.Mod1.Comment}}
 
 """
 
 
-def Clerk():
-    return{{- printf "\n" -}}`
+def clerk(location):
+    match location:
+{{ range .Mod1.Methods -}}
+{{"        "}}case {{ printf "%q" . }}: return _{{ . }}{{- printf "\n" -}}
+{{- end -}}
+# end clerk{{- printf "\n" -}}`
+
+
+var mod1CommentTemplate = `{{ $location := .Mod0.Location -}}
+""" <location: {{ $location }}.{{ .Mod1.Name }} />
+
+{{.Mod1.Comment}}
+
+"""`
+
+var mod1ClerkTemplate = `def clerk(location):
+    match location:
+{{ range .Mod1.Methods -}}
+{{"        "}}case {{ printf "%q" . }}: return _{{ . }}{{- printf "\n" -}}
+{{- end -}}
+# end clerk`
 
 func ModuleTemplate(modLevel string) string {
     tmpl := map[string]string{
         "mod0": mod0Template,
         "mod1": mod1Template,
-        "mod2": mod2Template,
+        "mod1_comment": mod1CommentTemplate,
+        "mod1_clerk": mod1ClerkTemplate,
     }
     return tmpl[modLevel]
+}
+
+func CompletedTemplate(tmplTxt string, inputData interface{}) string {
+    var re bytes.Buffer
+
+    tmpl, err := template.New("clerk").Parse(tmplTxt)
+    if err != nil {
+        return ""
+    }
+
+    err = tmpl.Execute(&re, inputData) // 置換して標準出力へ
+	if err != nil {
+		return ""
+	}
+
+
+	return re.String()
 }
