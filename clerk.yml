@@ -1,9 +1,25 @@
 lang: python
 export: true
 spec:
-- location: proc
-  services:
-  - name: run
-    upstreams:
-      - name: test
-        comment: テスト
+- location: html
+  upstreams:
+    - name: RaceSearchResultPage
+      comment: レース検索結果ページのhtml
+      methods:
+        - fetch
+        - clear
+        - get
+        - set
+
+
+- location: PageNation
+  upstreams:
+    - name: LimitPageNumber
+      comment: |-
+        ページ下部ページネーションの「最後」のaタグの
+        hrefを取得しhref内のpage=XXXXのXXXXのページ数を取得
+      methods:
+        - fetch
+        - clear
+        - get
+        - set
