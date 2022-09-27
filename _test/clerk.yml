@@ -1,7 +1,7 @@
 lang: python
 spec:
 - location: html
-  upstreams:
+  upstream:
     - name: RaceSearchResultPage
       comment: レース検索結果ページのhtmlアップデートアップデート
       methods:
@@ -10,7 +10,7 @@ spec:
 
 
 - location: PageNation
-  upstreams:
+  upstream:
     - name: LimitPageNumber
       comment: |-
         ページ下部ページネーションの「最後」のaタグの
