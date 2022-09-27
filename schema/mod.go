@@ -13,11 +13,11 @@ type ClerkYaml struct {
 	Export bool   `yaml:"export"`
 	Spec   []struct {
 		Location  string `yaml:"location"`
-		Upstreams []struct {
+		Upstream []struct {
 			Name    string   `yaml:"name"`
 			Comment string   `yaml:"comment"`
 			Methods []string `yaml:"methods"`
-		} `yaml:"upstreams"`
+		} `yaml:"upstream"`
 	} `yaml:"spec"`
 }
 

@@ -33,7 +33,7 @@ func Proc(scm *schema.ClerkYaml) error {
             },
         ); err != nil { return err }
 
-        for _, mod1 := range mod0.Upstreams {
+        for _, mod1 := range mod0.Upstream {
             modFilePath := fmt.Sprintf(
                 "./clerks/%s/%s.py",
                 mod0.Location,
