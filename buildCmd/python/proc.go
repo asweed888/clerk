@@ -14,12 +14,12 @@ func Proc(scm *schema.ClerkYaml) error {
 
     for _, mod0 := range scm.Spec {
         modFilePath := fmt.Sprintf(
-            "./clerks/%s/__init__.py",
+            "./%s/__init__.py",
             mod0.Location,
         )
 
         // mod0のためのディレクトリを作成
-        if err := create.Directory("clerks", mod0.Location); err != nil {
+        if err := create.Directory(mod0.Location); err != nil {
             return err
         }
 
@@ -28,14 +28,13 @@ func Proc(scm *schema.ClerkYaml) error {
             modFilePath,
             get.ModuleTemplate("mod0"),
             map[string]interface{}{
-                "ApiRoot": get.ApiRoot(scm.Export),
                 "Mod0": mod0,
             },
         ); err != nil { return err }
 
         for _, mod1 := range mod0.Upstream {
             modFilePath := fmt.Sprintf(
-                "./clerks/%s/%s.py",
+                "./%s/%s.py",
                 mod0.Location,
                 mod1.Name,
             )

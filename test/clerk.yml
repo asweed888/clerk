@@ -1,0 +1,29 @@
+lang: python
+spec:
+- location: html
+  upstream:
+    - name: RaceSearchResultPage
+      comment: レース検索結果ページのhtmlアップデートアップデート
+      methods:
+        - get
+        - set
+
+    - name: RaceListPage
+      comment: レース一覧ページのhtml
+      methods:
+        - open
+        - get
+        - close
+
+
+- location: PageNation
+  upstream:
+    - name: LimitPageNumber
+      comment: |-
+        ページ下部ページネーションの「最後」のaタグの
+        hrefを取得しhref内のpage=XXXXのXXXXのページ数を取得
+      methods:
+        - fetch
+        - clear
+        - get
+        - set
