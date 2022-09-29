@@ -16,29 +16,17 @@ func ApiRoot(isExport bool) string {
     }
 }
 
-var mod0Template = `{{ $apiRoot := .ApiRoot -}}
-{{ $location := .Mod0.Location -}}
-{{ if $apiRoot -}}
+var mod0Template = `from . import (
 {{ range .Mod0.Upstream -}}
-import {{ $apiRoot }}.clerks.{{ $location }}.{{ .Name }}
+{{"    "}}{{ .Name }},
 {{ end -}}
-{{ else -}}
-{{ range .Mod0.Upstream -}}
-import clerks.{{ $location }}.{{ .Name }}
-{{ end -}}
-{{ end -}}
+){{ printf "\n" -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
 def clerk(location):
     match location:
-{{ if $apiRoot -}}
 {{ range .Mod0.Upstream -}}
-{{"        "}}case {{ printf "%q" .Name }}: return {{ $apiRoot }}.clerks.{{ $location }}.{{ .Name }}.clerk{{- printf "\n" -}}
-{{- end -}}
-{{- else -}}
-{{ range .Mod0.Upstream -}}
-{{"        "}}case {{ printf "%q" .Name }}: return clerks.{{ $location }}.{{ .Name }}.clerk{{- printf "\n" -}}
-{{- end -}}
+{{"        "}}case {{ printf "%q" .Name }}: return {{ .Name }}.clerk{{- printf "\n" -}}
 {{- end -}}`
 
 
