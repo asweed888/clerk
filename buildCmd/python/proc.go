@@ -23,6 +23,12 @@ func Proc(scm *schema.ClerkYaml) error {
             return err
         }
 
+        // location rootにコメントが記載された場合は
+        // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
+        if mod0.Comment != "" {
+            continue
+        }
+
         // mod0のmoduleを作成
         if err := create.Module(
             modFilePath,
