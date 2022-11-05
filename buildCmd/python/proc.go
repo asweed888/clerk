@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/asweed888/clerk/buildCmd/python/create"
+	"github.com/asweed888/clerk/buildCmd/python/file"
 	"github.com/asweed888/clerk/buildCmd/python/get"
+	"github.com/asweed888/clerk/buildCmd/python/template"
 	"github.com/asweed888/clerk/buildCmd/python/update"
 	"github.com/asweed888/clerk/schema"
 )
@@ -88,6 +90,23 @@ func Proc(scm *schema.ClerkYaml) error {
 
             } //end if
 
+            // メソッドの自動書き出し機能
+            // 未定義のメソッドをファイル行末に追加
+            fileContent, err := file.Mod1.Read(modFilePath)
+            if err != nil {
+                return err
+            }
+
+            for _, method := range mod1.Methods {
+                methodTemplate := template.Mod1Method.Get()
+
+                if !file.Mod1.Method.IsDefined(fileContent, method) {
+                    err = file.Mod1.Write(modFilePath, methodTemplate, method)
+                    if err != nil {
+                        return err
+                    }
+                }
+            }
 
         } //end for mod1
 

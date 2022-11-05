@@ -1,25 +1,12 @@
 lang: python
-export: true
 spec:
-- location: html
+- location: ClerkDemo
   upstream:
-    - name: RaceSearchResultPage
-      comment: レース検索結果ページのhtml
+    - name: test
+      comment: 未定義のmethodの自動書き出し機能追加
       methods:
-        - fetch
-        - clear
         - get
         - set
-
-
-- location: PageNation
-  upstream:
-    - name: LimitPageNumber
-      comment: |-
-        ページ下部ページネーションの「最後」のaタグの
-        hrefを取得しhref内のpage=XXXXのXXXXのページ数を取得
-      methods:
-        - fetch
-        - clear
-        - get
-        - set
+        - test
+        - find
+        # - write
