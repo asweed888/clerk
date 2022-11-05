@@ -1,0 +1,16 @@
+lang: python
+spec:
+- location: Env
+  upstream:
+    - name: var
+      comment: 環境変数
+      methods:
+        - get
+
+- location: Html
+  comment: |-
+    スクレイピングしてきたhtmlを扱うアプリ
+
+- location: Sql
+  comment: |-
+    sqlへの入出力を担うアプリ
