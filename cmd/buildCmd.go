@@ -15,6 +15,7 @@ import (
 
 var BuildCommand = &cli.Command{
     Name: "build",
+    Aliases: []string{"generate", "gen", "b", "g"},
     Usage: "The package is generated based on the specifications written in clerk.yml.",
     Flags: []cli.Flag{},
     Action: func(c *cli.Context) error {
