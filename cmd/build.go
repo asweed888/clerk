@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/asweed888/clerk/buildCmd/python"
+	"github.com/asweed888/clerk/cmd/build/python"
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
 )
@@ -13,7 +13,7 @@ import (
 //
 // }
 
-var BuildCommand = &cli.Command{
+var Build = &cli.Command{
     Name: "build",
     Aliases: []string{"generate", "gen", "b", "g"},
     Usage: "The package is generated based on the specifications written in clerk.yml.",
