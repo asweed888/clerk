@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/asweed888/clerk/cmd/build/python/module"
-	"github.com/asweed888/clerk/cmd/build/python/module0"
-	"github.com/asweed888/clerk/cmd/build/python/module1"
+	"github.com/asweed888/clerk/buildCmd/python/create"
+	"github.com/asweed888/clerk/buildCmd/python/file"
+	"github.com/asweed888/clerk/buildCmd/python/get"
+	"github.com/asweed888/clerk/buildCmd/python/template"
+	"github.com/asweed888/clerk/buildCmd/python/update"
 	"github.com/asweed888/clerk/schema"
 )
 
@@ -19,7 +21,7 @@ func Proc(scm *schema.ClerkYaml) error {
         )
 
         // mod0のためのディレクトリを作成
-        if err := module0.Directory.Create(mod0.Location); err != nil {
+        if err := create.Directory(mod0.Location); err != nil {
             return err
         }
 
@@ -30,14 +32,13 @@ func Proc(scm *schema.ClerkYaml) error {
         }
 
         // mod0のmoduleを作成
-        if err := module.File.Save(
+        if err := create.Module(
             modFilePath,
-            module0.Template.Get(),
+            get.ModuleTemplate("mod0"),
             map[string]interface{}{
                 "Mod0": mod0,
             },
         ); err != nil { return err }
-
 
         for _, mod1 := range mod0.Upstream {
             modFilePath := fmt.Sprintf(
@@ -47,24 +48,25 @@ func Proc(scm *schema.ClerkYaml) error {
             )
 
             if _, err := os.Stat(modFilePath); err != nil {
-            // moduleのファイルが存在していない場合
 
-                if err := module.File.Save(
+                if err := create.Module(
                     modFilePath,
-                    module1.Template.Get(),
+                    get.ModuleTemplate("mod1"),
                     map[string]interface{}{
                         "Mod0": mod0,
                         "Mod1": mod1,
                     },
-                ); err != nil { return nil }
+                ); err != nil {
+                    return nil
+                }
 
-            } else {
             // moduleのファイルが存在している場合
+            } else {
 
-                if err := module1.File.Comment.Save(
+                if err := update.EndModComment(
                     modFilePath,
-                    module.Template.Fill(
-                        module1.Template.Comment.Get(),
+                    get.CompletedTemplate(
+                        get.ModuleTemplate("mod1_comment"),
                         map[string]interface{}{
                             "Mod0": mod0,
                             "Mod1": mod1,
@@ -74,10 +76,10 @@ func Proc(scm *schema.ClerkYaml) error {
                     return nil
                 }
 
-                if err := module1.File.Clerk.Save(
+                if err := update.EndModClerk(
                     modFilePath,
-                    module.Template.Fill(
-                        module1.Template.Clerk.Get(),
+                    get.CompletedTemplate(
+                        get.ModuleTemplate("mod1_clerk"),
                         map[string]interface{}{
                             "Mod1": mod1,
                         },
@@ -90,16 +92,16 @@ func Proc(scm *schema.ClerkYaml) error {
 
             // メソッドの自動書き出し機能
             // 未定義のメソッドをファイル行末に追加
-            fileContent, err := module1.File.Load(modFilePath)
+            fileContent, err := file.Mod1.Read(modFilePath)
             if err != nil {
                 return err
             }
 
             for _, method := range mod1.Methods {
-                methodTemplate := module1.Template.Method.Get()
+                methodTemplate := template.Mod1Method.Get()
 
-                if !module1.File.Method.IsDefined(fileContent, method) {
-                    err = module1.File.Method.Save(modFilePath, methodTemplate, method)
+                if !file.Mod1.Method.IsDefined(fileContent, method) {
+                    err = file.Mod1.Write(modFilePath, methodTemplate, method)
                     if err != nil {
                         return err
                     }

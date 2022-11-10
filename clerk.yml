@@ -7,6 +7,6 @@ spec:
       methods:
         - get
         - set
-        - test
-        - find
+        # - test
+        # - find
         # - write
