@@ -14,12 +14,12 @@ func main(){
 
     app := cli.NewApp()
     app.Name = "clerk"
-    app.Usage = cmd.BuildCommand.Usage
+    app.Usage = cmd.Build.Usage
     app.Description = "This is a very simple declarative development framework."
-    app.Flags = cmd.BuildCommand.Flags
+    app.Flags = cmd.Build.Flags
     app.Version = Version
     app.Commands = []*cli.Command{
-        cmd.BuildCommand,
+        cmd.Build,
     }
 
     if err := app.Run(os.Args); err != nil {
