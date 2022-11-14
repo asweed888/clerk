@@ -1,16 +1,11 @@
-lang: python
+lang: commonjs
 spec:
-- location: Env
+- location: Greet
   upstream:
-    - name: var
-      comment: 環境変数
+    - name: hello
+      comment: hello world
       methods:
         - get
-
-- location: Html
-  comment: |-
-    スクレイピングしてきたhtmlを扱うアプリ
-
-- location: Sql
-  comment: |-
-    sqlへの入出力を担うアプリ
+        - set
+        - find
+        - fetch

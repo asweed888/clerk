@@ -1,4 +1,4 @@
-lang: python
+lang: commonjs
 spec:
 - location: ClerkDemo
   upstream:
