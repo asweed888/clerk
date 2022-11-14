@@ -1,4 +1,4 @@
-package module0
+package common
 
 import "os"
 
