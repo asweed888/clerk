@@ -10,3 +10,26 @@ spec:
         # - test
         # - find
         # - write
+
+
+- location: ClerkDemo2
+  upstream:
+    - name: test2
+      comment: テスト用2
+      methods:
+        - get
+        - test
+        - find
+        - put
+        - write
+        - print
+
+    - name: test3
+      comment: テスト用3
+      methods:
+        - get
+        - print
+        - fetch
+        - pull
+        - clone
+        - push
