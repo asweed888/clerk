@@ -1,4 +1,4 @@
-lang: commonjs
+lang: deno
 spec:
 - location: Greet
   upstream:
@@ -6,6 +6,4 @@ spec:
       comment: hello world
       methods:
         - get
-        - set
-        - find
-        - fetch
+        - print

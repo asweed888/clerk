@@ -4,33 +4,21 @@ hello world
 
 */
 
-
-module.exports.clerk = (location) => {
+export default { clerk }
+function clerk(location) {
     switch (location) {
         case "get": return _get
-        case "set": return _set
-        case "find": return _find
-        case "fetch": return _fetch
+        case "print": return _print
     }
 }
 // end clerk
 
 
 function _get(){
-    console.log("this is clerk's default return value")
+    return "Hello world"
 }
 
 
-function _set(){
-    console.log("this is clerk's default return value")
-}
-
-
-function _find(){
-    return "Hello World"
-}
-
-
-function _fetch(){
-    console.log("this is clerk's default return value")
+function _print(){
+    console.log("Hello World")
 }
