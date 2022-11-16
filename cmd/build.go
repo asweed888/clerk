@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/asweed888/clerk/cmd/build/commonjs"
 	"github.com/asweed888/clerk/cmd/build/deno"
@@ -9,11 +10,6 @@ import (
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
 )
-
-// type Mod1TmplArgs struct {
-//     Name
-//
-// }
 
 var Build = &cli.Command{
     Name: "build",
@@ -42,6 +38,7 @@ var Build = &cli.Command{
             return err
         }
 
+        log.Println("generate of clerk has been completed.")
         return nil
     },
 }
