@@ -1,3 +1,5 @@
-const Greet = require("./Greet")
+import Greet from "./Greet/mod.js"
 
-console.log(Greet.clerk("hello")("find")())
+// console.log(Greet.clerk("hello")("get")())
+
+Greet.clerk("hello")("print")()
