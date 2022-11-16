@@ -6,7 +6,7 @@ var Template = &TemplateSpec{}
 
 func (s *TemplateSpec) Get() string {
     return `{{ range .Mod0.Upstream -}}
-import _{{.Name}} from "./{{ .Name }}""
+import _{{.Name}} from "./{{ .Name }}.js"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
