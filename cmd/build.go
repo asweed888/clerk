@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/asweed888/clerk/cmd/build/commonjs"
+	"github.com/asweed888/clerk/cmd/build/deno"
 	"github.com/asweed888/clerk/cmd/build/python"
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
@@ -29,6 +30,8 @@ var Build = &cli.Command{
         switch scm.Lang {
             case "python":
                 err = python.Proc(scm)
+            case "deno":
+                err = deno.Proc(scm)
             case "commonjs":
                 err = commonjs.Proc(scm)
             default:
