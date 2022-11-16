@@ -1,5 +1,5 @@
 .DS_Store
 clerks/*
-_test/clerk_test
+_test/clerk
 _test/clerks
 ClerkDemo*
