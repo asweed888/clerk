@@ -1,4 +1,4 @@
-lang: deno
+lang: python
 spec:
 - location: Greet
   upstream:
@@ -6,4 +6,10 @@ spec:
       comment: hello world
       methods:
         - get
-        - print
+
+- location: Proc
+  upstream:
+    - name: test
+      comment: テスト用のプロシージャ
+      methods:
+        - run

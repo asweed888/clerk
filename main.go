@@ -20,6 +20,7 @@ func main(){
     app.Version = Version
     app.Commands = []*cli.Command{
         cmd.Build,
+        cmd.Watch,
     }
 
     if err := app.Run(os.Args); err != nil {
