@@ -19,9 +19,11 @@ func Proc(scm *schema.ClerkYaml) error {
         )
 
         // mod0のためのディレクトリを作成
-        if err := common.Directory.Create(mod0.Location); err != nil {
-            return err
-        }
+        if err := common.Directory.Create(mod0.Location); err != nil { return err }
+
+        // 作成されたディレクトリがclerkによって作成されたものである事がわかるように
+        // .clerkというファイルを作成
+        if err := common.File.DotClerk.Create(mod0.Location); err != nil { return err }
 
         // location rootにコメントが記載された場合は
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない

@@ -12,6 +12,7 @@ type FileSpec struct {
     Module1 struct {
         Method F_MethodSpec
     }
+    DotClerk DotClerkSpec
 }
 
 var File = &FileSpec{}
@@ -68,4 +69,20 @@ func (s *F_MethodSpec) Save(modFilePath string, template string, method string) 
 
 func (s *F_MethodSpec) IsDefined(fileContent string, searchString string) bool {
     return strings.Contains(fileContent, searchString)
+}
+
+
+type DotClerkSpec struct {}
+func (s *DotClerkSpec) Create(location string) error {
+    outFilePath := fmt.Sprintf("./%s/.clerk", location)
+
+    if _, err := os.Stat(outFilePath); err != nil {
+        file, err := os.Create(outFilePath)
+        if err != nil {
+            return err
+        }
+        defer file.Close()
+    }
+
+    return nil
 }
