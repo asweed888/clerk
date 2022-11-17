@@ -1,5 +1,3 @@
 .DS_Store
-clerks/*
-_test/clerk
-_test/clerks
+_test/*
 ClerkDemo*
