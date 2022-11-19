@@ -36,7 +36,7 @@ func (s *F_CommentSpec) Save(filePath string, newComment string) error {
 
 type F_ClerkSpec struct {}
 func (s *F_ClerkSpec) Save(filePath string, newValue string) error {
-    replaceTarget := regexp.MustCompile(`def clerk[\s\S\n]*# end clerk`)
+    replaceTarget := regexp.MustCompile(`def clerk[\s\S\n]*?# end clerk`)
     bytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
