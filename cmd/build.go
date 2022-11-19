@@ -6,6 +6,7 @@ import (
 
 	"github.com/asweed888/clerk/cmd/build/commonjs"
 	"github.com/asweed888/clerk/cmd/build/deno"
+	"github.com/asweed888/clerk/cmd/build/ecmascript"
 	"github.com/asweed888/clerk/cmd/build/python"
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
@@ -30,6 +31,8 @@ var Build = &cli.Command{
                 err = deno.Proc(scm)
             case "commonjs":
                 err = commonjs.Proc(scm)
+            case "ecmascript":
+                err = ecmascript.Proc(scm)
             default:
                 return fmt.Errorf("対応していない言語が指定されています。")
         }
