@@ -5,8 +5,7 @@ import (
 	"log"
 
 	"github.com/asweed888/clerk/cmd/build/commonjs"
-	"github.com/asweed888/clerk/cmd/build/deno"
-	"github.com/asweed888/clerk/cmd/build/ecmascript"
+	"github.com/asweed888/clerk/cmd/build/modernjs"
 	"github.com/asweed888/clerk/cmd/build/python"
 	"github.com/asweed888/clerk/schema"
 	"github.com/urfave/cli/v2"
@@ -27,14 +26,16 @@ var Build = &cli.Command{
         switch scm.Lang {
             case "python":
                 err = python.Proc(scm)
-            case "deno":
-                err = deno.Proc(scm)
             case "commonjs":
                 err = commonjs.Proc(scm)
+            case "deno":
+                err = modernjs.Proc(scm)
             case "ecmascript":
-                err = ecmascript.Proc(scm)
+                err = modernjs.Proc(scm)
+            case "jsx":
+                err = modernjs.Proc(scm)
             default:
-                return fmt.Errorf("対応していない言語が指定されています。")
+                return fmt.Errorf("Invalid language designation")
         }
 
         if err != nil {

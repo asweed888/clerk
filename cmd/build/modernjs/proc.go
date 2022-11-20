@@ -1,21 +1,25 @@
-package deno
+package modernjs
 
 import (
 	"fmt"
 	"os"
 
 	"github.com/asweed888/clerk/cmd/build/common"
-	"github.com/asweed888/clerk/cmd/build/deno/module0"
-	"github.com/asweed888/clerk/cmd/build/deno/module1"
+	"github.com/asweed888/clerk/cmd/build/modernjs/module0"
+	"github.com/asweed888/clerk/cmd/build/modernjs/module1"
 	"github.com/asweed888/clerk/schema"
 )
 
 func Proc(scm *schema.ClerkYaml) error {
 
+    jsConfig, err := common.JsConfig(scm)
+    if err != nil { return err }
+
     for _, mod0 := range scm.Spec {
         modFilePath := fmt.Sprintf(
-            "./%s/mod.js",
+            "./%s/%s",
             mod0.Location,
+            jsConfig.ModuleMainFile,
         )
 
         // mod0のためのディレクトリを作成
@@ -37,6 +41,7 @@ func Proc(scm *schema.ClerkYaml) error {
             module0.Template.Get(),
             map[string]interface{}{
                 "Mod0": mod0,
+                "JsConfig": jsConfig,
             },
         ); err != nil { return err }
 
