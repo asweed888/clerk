@@ -10,7 +10,7 @@ import _{{.Name}} from "./{{ .Name }}.js"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
-export default { clerk }
+export {{ .JsConfig.ExportTo }}{ clerk }
 function clerk(location) {
     switch (location) {
 {{ range .Mod0.Upstream -}}
