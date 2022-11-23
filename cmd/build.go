@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/asweed888/clerk/cmd/build/commonjs"
+	"github.com/asweed888/clerk/cmd/build/golang"
 	"github.com/asweed888/clerk/cmd/build/modernjs"
 	"github.com/asweed888/clerk/cmd/build/python"
 	"github.com/asweed888/clerk/schema"
@@ -24,18 +25,20 @@ var Build = &cli.Command{
             return err
         }
         switch scm.Lang {
-            case "python":
-                err = python.Proc(scm)
-            case "commonjs":
-                err = commonjs.Proc(scm)
-            case "deno":
-                err = modernjs.Proc(scm)
-            case "ecmascript":
-                err = modernjs.Proc(scm)
-            case "jsx":
-                err = modernjs.Proc(scm)
-            default:
-                return fmt.Errorf("Invalid language designation")
+        case "go":
+            err = golang.Proc(scm)
+        case "python":
+            err = python.Proc(scm)
+        case "commonjs":
+            err = commonjs.Proc(scm)
+        case "deno":
+            err = modernjs.Proc(scm)
+        case "ecmascript":
+            err = modernjs.Proc(scm)
+        case "jsx":
+            err = modernjs.Proc(scm)
+        default:
+            return fmt.Errorf("Invalid language designation")
         }
 
         if err != nil {

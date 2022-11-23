@@ -32,7 +32,10 @@ func (s *FileSpec) Load(modFilePath string) (string, error) {
 }
 
 func (s *FileSpec) Save(outFilePath string, tmplTxt string, inputData interface{}) error {
-    tmpl, err := template.New("clerk").Parse(tmplTxt)
+    funcMap := template.FuncMap{
+        "ToTitle": strings.Title,
+    }
+    tmpl, err := template.New("clerk").Funcs(funcMap).Parse(tmplTxt)
     if err != nil {
         return err
     }

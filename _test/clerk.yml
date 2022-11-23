@@ -1,15 +1,16 @@
-lang: python
+lang: go
 spec:
-- location: Greet
+- location: greet
   upstream:
     - name: hello
-      comment: hello world
+      comment: hello worldを出力する
       methods:
         - get
+        - print
 
-- location: Proc
+- location: proc
   upstream:
     - name: test
-      comment: テスト用のプロシージャ
+      comment: テスト用プロシージャ
       methods:
         - run
