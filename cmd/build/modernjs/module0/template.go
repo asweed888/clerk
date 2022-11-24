@@ -10,11 +10,11 @@ import {{ .Name | ToTitle }} from "./{{ .Name }}.js"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
-export {{ .JsConfig.ExportTo }}{
-    Clerk: {
+const Clerk = {
 {{ range .Mod0.Upstream -}}
-{{"        "}}{{ .Name | ToTitle }}{{- printf ",\n"}}
+{{"    "}}{{ .Name | ToTitle }}{{- printf ",\n"}}
 {{- end -}}
-{{"    "}}}
-}`
+}
+{{ printf "\n" -}}
+export {{ .JsConfig.ExportTo }}{ Clerk }`
 }
