@@ -2,6 +2,7 @@ package common
 
 import (
 	"bytes"
+	"strings"
 	"text/template"
 )
 
@@ -11,8 +12,11 @@ var Template = &TemplateSpec{}
 
 func (s *TemplateSpec) Fill(tmplTxt string, inputData interface{}) string {
     var re bytes.Buffer
+    funcMap := template.FuncMap{
+        "ToTitle": strings.Title,
+    }
 
-    tmpl, err := template.New("clerk").Parse(tmplTxt)
+    tmpl, err := template.New("clerk").Funcs(funcMap).Parse(tmplTxt)
     if err != nil {
         return ""
     }

@@ -6,15 +6,14 @@ var Template = &TemplateSpec{}
 
 func (s *TemplateSpec) Get() string {
     return `{{ range .Mod0.Upstream -}}
-import _{{.Name}} from "./{{ .Name }}.js"
+import {{ .Name | ToTitle }} from "./{{ .Name }}.js"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
-export {{ .JsConfig.ExportTo }}{ clerk }
-function clerk(location) {
-    switch (location) {
+export {{ .JsConfig.ExportTo }}{
+    Clerk: {
 {{ range .Mod0.Upstream -}}
-{{"        "}}case {{ printf "%q" .Name }}: return _{{.Name}}.clerk{{- printf "\n"}}
+{{"        "}}{{ .Name | ToTitle }}{{- printf ",\n"}}
 {{- end -}}
 {{"    "}}}
 }`

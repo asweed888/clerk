@@ -3,6 +3,7 @@ package modernjs
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/asweed888/clerk/cmd/build/common"
 	"github.com/asweed888/clerk/cmd/build/modernjs/module0"
@@ -63,7 +64,7 @@ func Proc(scm *schema.ClerkYaml) error {
                         "Mod0": mod0,
                         "Mod1": mod1,
                     },
-                ); err != nil { return nil }
+                ); err != nil { return err }
 
             } else {
             // moduleのファイルが存在している場合
@@ -78,7 +79,7 @@ func Proc(scm *schema.ClerkYaml) error {
                         },
                     ),
                 ); err != nil {
-                    return nil
+                    return err
                 }
 
                 if err := module1.File.Clerk.Save(
@@ -90,7 +91,7 @@ func Proc(scm *schema.ClerkYaml) error {
                         },
                     ),
                 ); err != nil {
-                    return nil
+                    return err
                 }
 
             } //end if
@@ -105,8 +106,8 @@ func Proc(scm *schema.ClerkYaml) error {
             for _, method := range mod1.Methods {
                 methodTemplate := module1.Template.Method.Get()
 
-                if !common.File.Module1.Method.IsDefined(fileContent, fmt.Sprintf("function _%s(", method)) {
-                    err = common.File.Module1.Method.Save(modFilePath, methodTemplate, method)
+                if !common.File.Module1.Method.IsDefined(fileContent, fmt.Sprintf("function %s(", strings.Title(method))) {
+                    err = common.File.Module1.Method.Save(modFilePath, methodTemplate, strings.Title(method))
                     if err != nil {
                         return err
                     }

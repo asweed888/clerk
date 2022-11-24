@@ -15,15 +15,12 @@ func (s *TemplateSpec) Get() string {
 
 */
 
-export default { clerk }
-function clerk(location) {
-    switch (location) {
+export default {
 {{ range .Mod1.Methods -}}
-{{"        "}}case {{ printf "%q" . }}: return _{{ . }}{{- printf "\n" -}}
+{{"    "}}{{ . | ToTitle }}{{- printf ",\n" -}}
 {{- end -}}
-{{"    "}}}
 }
-// end clerk{{- printf "\n" -}}`
+// end export{{- printf "\n" -}}`
 }
 
 
@@ -40,14 +37,12 @@ func (s *T_CommentSpec) Get() string {
 
 type T_ClerkSpec struct {}
 func (s *T_ClerkSpec) Get() string {
-    return `function clerk(location) {
-    switch (location) {
+    return `export default {
 {{ range .Mod1.Methods -}}
-{{"        "}}case {{ printf "%q" . }}: return _{{ . }}{{- printf "\n" -}}
+{{"    "}}{{ . | ToTitle }}{{- printf ",\n" -}}
 {{- end -}}
-{{"    "}}}
 }
-// end clerk`
+// end export`
 }
 
 
@@ -55,7 +50,7 @@ type T_MethodSpec struct {}
 func (s *T_MethodSpec) Get() string {
     return `
 
-function _%s(){
+function %s(){
     console.log("this is clerk's default return value")
 }`
 }
