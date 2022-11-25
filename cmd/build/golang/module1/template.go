@@ -15,7 +15,7 @@ func (s *TemplateSpec) Get() string {
 */
 package {{ $location }}
 
-type {{ .Mod1.Name }} struct {}`
+type {{ .Mod1.Name }} struct {}{{- printf "\n" -}}`
 }
 
 
