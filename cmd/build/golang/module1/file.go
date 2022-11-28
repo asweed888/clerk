@@ -17,7 +17,7 @@ var File = &FileSpec{}
 
 type F_CommentSpec struct {}
 func (s *F_CommentSpec) Save(filePath string, newComment string) error {
-    replaceTarget := regexp.MustCompile(`/\* <location:[\s\S\n]*\*/`)
+    replaceTarget := regexp.MustCompile(`/\* <location:[\s\S\n]*?\*/`)
     bytes, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
