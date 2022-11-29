@@ -1,35 +1,48 @@
-lang: commonjs
+lang: go
 spec:
-- location: ClerkDemo
-  upstream:
-    - name: test
-      comment: 未定義のmethodの自動書き出し機能追加
-      methods:
-        - get
-        - set
-        # - test
-        # - find
-        # - write
+- location: cmd
+  comment: 各コマンドの管理用ディレクトリ
+
+- location: schema
+  comment: clerk.yml
+
+- location: template
+  comment: 各言語のテンプレート
 
 
-- location: ClerkDemo2
+- location: fs
   upstream:
-    - name: test2
-      comment: テスト用2
+    - name: directory
+      comment: 指定されたディレクトリへの操作
       methods:
-        - get
-        - test
-        - find
-        - put
+        - create
+
+    - name: dotClerkFile
+      methods:
+        - create
+
+    - name: codeFile
+      methods:
+        - read
         - write
-        - print
+        - replace
 
-    - name: test3
-      comment: テスト用3
+    - name: codeFileMethod
       methods:
-        - get
-        - print
-        - fetch
-        - pull
-        - clone
-        - push
+        - isDefined
+        - append
+
+
+- location: buildCmd
+  upstream:
+    - name: golang
+      methods:
+        - exec
+
+    - name: modernjs
+      methods:
+        - exec
+
+    - name: python
+      methods:
+        - exec

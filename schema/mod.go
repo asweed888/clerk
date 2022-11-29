@@ -22,7 +22,7 @@ type ClerkYaml struct {
 }
 
 
-func Load() (*ClerkYaml, error) {
+func Read() (*ClerkYaml, error) {
     f, err := ioutil.ReadFile("./clerk.yml")
 	if err != nil {
 		return nil, fmt.Errorf("ERROR: clerk.yml is not found, please create clerk.yml.")
