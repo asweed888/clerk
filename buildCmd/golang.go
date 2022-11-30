@@ -2,7 +2,7 @@
 
 
 
- */
+*/
 package buildCmd
 
 import (
@@ -25,7 +25,6 @@ func (s *golang) Exec(scm *schema.ClerkYaml) error {
             "./%s/mod.go",
             lv0.Location,
         )
-
 
 		// locationのディレクトリを作成する
 		if err := fs.Clerk.Directory.Create(lv0.Location); err != nil { return err }
