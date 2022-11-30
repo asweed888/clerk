@@ -10,6 +10,14 @@ spec:
   comment: 各言語のテンプレート
 
 
+- location: config
+  upstream:
+    - name: jsConfig
+      comment: modernjsの設定
+      methods:
+        - get
+
+
 - location: fs
   upstream:
     - name: directory
