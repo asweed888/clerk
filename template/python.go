@@ -21,7 +21,7 @@ func (s *py_level0) FullTemplate() string {
 func (s *py_level1) FullTemplate() string {
     return `from . import (
 {{ range .Level0.Upstream -}}
-{{"    "}}{{ .Name }},
+{{"    "}}{{ .Name | ToTitle }},
 {{ end -}}
 ){{ printf "\n" -}}`
 }
@@ -29,19 +29,19 @@ func (s *py_level1) FullTemplate() string {
 
 func (s *py_level2) FullTemplate() string {
     return `{{ $location := .Level0.Location -}}
-""" <location: {{ $location }}.{{ .Level1.Name }} />
+""" <location: {{ $location }}.{{ .Level2.Name }} />
 
-{{.Level1.Comment}}
+{{.Level2.Comment}}
 
-"""{{- printf "\n" -}}`
+"""{{ printf "\n" -}}`
 }
 
 
 func (s *py_level2) CommentTemplate() string {
     return `{{ $location := .Level0.Location -}}
-""" <location: {{ $location }}.{{ .Level1.Name }} />
+""" <location: {{ $location }}.{{ .Level2.Name }} />
 
-{{.Level1.Comment}}
+{{.Level2.Comment}}
 
 """`
 }

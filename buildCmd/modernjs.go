@@ -50,13 +50,14 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 			template.Modernjs.Lv0.FullTemplate(),
 			map[string]interface{}{
 				"Level0": lv0,
+                "JsConfig": jsConfig,
 			},
 		); err != nil { return err }
 
 
 		for _, lv1 := range lv0.Upstream {
 			codeFilePath := fmt.Sprintf(
-				"./%s/%s.go",
+				"./%s/%s.js",
 				lv0.Location,
 				lv1.Name,
 			)
@@ -88,6 +89,19 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 						},
 					),
 				); err != nil { return err }
+
+				// コードファイルのexport部分を更新する
+				if err := fs.Clerk.CodeFile.Replace(
+					codeFilePath,
+					`export default[\s\S\n]*?\/\/ end export`,
+					template.Utils.FillTemplate(
+						template.Modernjs.Lv1.ExportTemplate(),
+						map[string]interface{}{
+							"Level1": lv1,
+						},
+					),
+				); err != nil { return err }
+
 			} //end if
 
             // メソッドの自動書き出し機能
@@ -104,8 +118,7 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 				if !fs.Clerk.CodeFileMethod.IsDefined(
 					fileContent,
 					fmt.Sprintf(
-						"func (s *%s) %s(",
-						lv1.Name,
+						"function %s(",
 						strings.Title(method),
 					),
 				) {
@@ -113,7 +126,6 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 					err = fs.Clerk.CodeFileMethod.Append(
 						codeFilePath,
 						methodTemplate,
-						lv1.Name,
 						strings.Title(method),
 					)
 					if err != nil {

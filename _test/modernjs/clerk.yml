@@ -1,0 +1,9 @@
+lang: deno
+spec:
+- location: greet
+  upstream:
+    - name: hello
+      comment: hello world
+      methods:
+        - print
+        - get

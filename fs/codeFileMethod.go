@@ -20,7 +20,11 @@ func (s *codeFileMethod) IsDefined(codeFileContent string, searchString string) 
 
 
 func (s *codeFileMethod) Append(codeFilePath string, template string, methods ...string) error {
-    methodDefine := fmt.Sprintf(template, methods[0], methods[1])
+    tmp := make([]interface{}, len(methods))
+    for i, val := range methods {
+        tmp[i] = val
+    }
+    methodDefine := fmt.Sprintf(template, tmp...)
     file, err := os.OpenFile(codeFilePath, os.O_APPEND|os.O_WRONLY, 0644)
     if err != nil {
         return err
