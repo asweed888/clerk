@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/asweed888/clerk/config"
 	"github.com/asweed888/clerk/fs"
 	"github.com/asweed888/clerk/schema"
 	"github.com/asweed888/clerk/template"
@@ -20,10 +21,14 @@ type modernjs struct {}
 
 func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 
+    jsConfig, err := config.Clerk.JsConfig.Get(scm)
+    if err != nil { return err }
+
     for _, lv0 := range scm.Spec {
         codeFilePath := fmt.Sprintf(
-            "./%s/mod.go",
+            "./%s/%s",
             lv0.Location,
+            jsConfig.CodeFileName,
         )
 
 		// locationのディレクトリを作成する
@@ -42,7 +47,7 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 		// level0のコードファイルを書き出す
 		if err := fs.Clerk.CodeFile.Write(
 			codeFilePath,
-			template.Golang.Lv0.FullTemplate(),
+			template.Modernjs.Lv0.FullTemplate(),
 			map[string]interface{}{
 				"Level0": lv0,
 			},
@@ -62,7 +67,7 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 				// level1のコードファイルを書き出す
 				if err := fs.Clerk.CodeFile.Write(
 					codeFilePath,
-					template.Golang.Lv1.FullTemplate(),
+					template.Modernjs.Lv1.FullTemplate(),
 					map[string]interface{}{
 						"Level0": lv0,
 						"Level1": lv1,
@@ -76,7 +81,7 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 					codeFilePath,
 					`/\* <location:[\s\S\n]*?\*/`,
 					template.Utils.FillTemplate(
-						template.Golang.Lv1.CommentTemplate(),
+						template.Modernjs.Lv1.CommentTemplate(),
 						map[string]interface{}{
 							"Level0": lv0,
 							"Level1": lv1,
@@ -93,7 +98,7 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
             }
 
 			for _, method := range lv1.Methods {
-				methodTemplate := template.Golang.Lv1.MethodTemplate()
+				methodTemplate := template.Modernjs.Lv1.MethodTemplate()
 
                 // コードファイル内でmethodが定義されていない場合
 				if !fs.Clerk.CodeFileMethod.IsDefined(
