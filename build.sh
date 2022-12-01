@@ -1,4 +1,14 @@
 #!/bin/bash
 
 mkdir -p ./_test
-go build -o ./_test/clerk main.go
+
+langs=(
+    golang \
+    modernjs \
+    python \
+)
+
+for lang in ${langs[@]}
+do
+    go build -o ./_test/$lang/clerk main.go
+done
