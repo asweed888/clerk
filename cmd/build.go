@@ -6,16 +6,15 @@ import (
 
 	"github.com/asweed888/clerk/buildCmd"
 	"github.com/asweed888/clerk/schema"
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 )
 
 
-var Build = &cli.Command{
-    Name: "build",
+var Build = &cobra.Command {
+    Use: "build",
     Aliases: []string{"generate", "gen", "b", "g"},
-    Usage: "The package is generated based on the specifications written in clerk.yml.",
-    Flags: []cli.Flag{},
-    Action: func(c *cli.Context) error {
+    Short: "The package is generated based on the specifications written in clerk.yml.",
+    RunE: func(cmd *cobra.Command, args []string) error {
 
         //clerk.ymlの読み込み
         scm, err := schema.Read()
