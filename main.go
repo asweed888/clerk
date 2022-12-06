@@ -1,31 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/asweed888/clerk/cmd"
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 )
 
 var Version string
 
+var commands = []*cobra.Command{
+    cmd.Build,
+    cmd.Watch,
+}
+
 func main(){
 
-    app := cli.NewApp()
-    app.Name = "clerk"
-    app.Usage = cmd.Build.Usage
-    app.Description = "This is a very simple declarative development framework."
-    app.Flags = cmd.Build.Flags
-    app.Version = Version
-    app.Commands = []*cli.Command{
-        cmd.Build,
-        cmd.Watch,
+    app := &cobra.Command{
+        Use: "clerk",
+        Short: "This is a very simple declarative development framework.",
+        Version: Version,
     }
 
-    if err := app.Run(os.Args); err != nil {
-		fmt.Fprint(os.Stderr, err.Error()+"\n")
-		os.Exit(1)
-	}
-
+    app.AddCommand(commands...)
+    app.Execute()
 }

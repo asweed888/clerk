@@ -6,14 +6,13 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/urfave/cli/v2"
+	"github.com/spf13/cobra"
 )
 
-var Watch = &cli.Command{
-    Name: "watch",
-    Usage: "Monitor clerk.yml and run the build command each time a change is made.",
-    Flags: []cli.Flag{},
-    Action: func(c *cli.Context) error {
+var Watch = &cobra.Command{
+    Use: "watch",
+    Short: "Monitor clerk.yml and run the build command each time a change is made.",
+    RunE: func(cmd *cobra.Command, args []string) error {
 
         log.Println("Start monitoring clerk.yml...")
 
@@ -40,7 +39,7 @@ var Watch = &cli.Command{
                     switch {
                     case event.Op&fsnotify.Write == fsnotify.Write:
                         log.Println("update clerk.yml ...")
-                        Build.Action(c)
+                        Build.RunE(cmd, args)
                     case event.Op&fsnotify.Create == fsnotify.Create:
                         log.Println("Created file: ", event.Name)
                     case event.Op&fsnotify.Remove == fsnotify.Remove:
@@ -51,7 +50,7 @@ var Watch = &cli.Command{
                         renameCh <- true
                     case event.Op&fsnotify.Chmod == fsnotify.Chmod:
                         log.Println("update clerk.yml ...")
-                        Build.Action(c)
+                        Build.RunE(cmd, args)
                     }
                 case err:= <-watcher.Errors:
                     errCh <-err
