@@ -12,8 +12,9 @@ var Modernjs = &modernjs{}
 
 
 func (s *js_level0) FullTemplate() string {
-    return `{{ range .Level0.Upstream -}}
-import {{ .Name | ToTitle }} from "./{{ .Name }}.js"
+    return `{{ $ext := .JsConfig.CodeFileExt -}}
+{{ range .Level0.Upstream -}}
+import {{ .Name | ToTitle }} from "./{{ .Name }}.{{ $ext }}"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
