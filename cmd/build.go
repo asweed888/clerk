@@ -28,9 +28,15 @@ var Build = &cobra.Command {
             err = buildCmd.Clerk.Python.Exec(scm)
         case "deno":
             err = buildCmd.Clerk.Modernjs.Exec(scm)
-        case "ecmascript":
+        case "denojs":
+            err = buildCmd.Clerk.Modernjs.Exec(scm)
+        case "nodejs":
+            err = buildCmd.Clerk.Modernjs.Exec(scm)
+        case "nodets":
             err = buildCmd.Clerk.Modernjs.Exec(scm)
         case "jsx":
+            err = buildCmd.Clerk.Modernjs.Exec(scm)
+        case "tsx":
             err = buildCmd.Clerk.Modernjs.Exec(scm)
         case "bash":
             err = buildCmd.Clerk.Shell.Exec(scm)

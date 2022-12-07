@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -26,9 +26,10 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
         codeFilePath := fmt.Sprintf(
-            "./%s/%s",
+            "./%s/%s.%s",
             lv0.Location,
             jsConfig.CodeFileName,
+            jsConfig.CodeFileExt,
         )
 
 		// locationのディレクトリを作成する
@@ -57,9 +58,10 @@ func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
 
 		for _, lv1 := range lv0.Upstream {
 			codeFilePath := fmt.Sprintf(
-				"./%s/%s.js",
+				"./%s/%s.%s",
 				lv0.Location,
 				lv1.Name,
+                jsConfig.CodeFileExt,
 			)
 
             if _, err := os.Stat(codeFilePath); err != nil {
