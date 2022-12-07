@@ -32,6 +32,8 @@ var Build = &cobra.Command {
             err = buildCmd.Clerk.Modernjs.Exec(scm)
         case "jsx":
             err = buildCmd.Clerk.Modernjs.Exec(scm)
+        case "bash":
+            err = buildCmd.Clerk.Shell.Exec(scm)
         default:
             return fmt.Errorf("Invalid language designation")
         }

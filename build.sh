@@ -6,6 +6,7 @@ langs=(
     golang \
     modernjs \
     python \
+    bash \
 )
 
 for lang in ${langs[@]}
