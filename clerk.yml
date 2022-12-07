@@ -25,6 +25,11 @@ spec:
       methods:
         - create
 
+    - name: shellFile
+      comment: 実行可能なshellのためのファイル
+      methods:
+        - create
+
     - name: dotClerkFile
       methods:
         - create
@@ -52,5 +57,9 @@ spec:
         - exec
 
     - name: python
+      methods:
+        - exec
+
+    - name: shell
       methods:
         - exec
