@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package fs
 
 import (
@@ -11,15 +11,15 @@ import (
 	"strings"
 )
 
-type codeFileMethod struct {}
+type c_codeFileMethod struct {}
 
 
-func (s *codeFileMethod) IsDefined(codeFileContent string, searchString string) bool {
+func (s *c_codeFileMethod) IsDefined(codeFileContent string, searchString string) bool {
     return strings.Contains(codeFileContent, searchString)
 }
 
 
-func (s *codeFileMethod) Append(codeFilePath string, template string, methods ...string) error {
+func (s *c_codeFileMethod) Append(codeFilePath string, template string, methods ...string) error {
     tmp := make([]interface{}, len(methods))
     for i, val := range methods {
         tmp[i] = val

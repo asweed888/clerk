@@ -16,10 +16,10 @@ import (
 	"github.com/asweed888/clerk/template"
 )
 
-type modernjs struct {}
+type c_modernjs struct {}
 
 
-func (s *modernjs) Exec(scm *schema.ClerkYaml) error {
+func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
 
     jsConfig, err := config.Clerk.JsConfig.Get(scm)
     if err != nil { return err }
