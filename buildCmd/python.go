@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -15,10 +15,10 @@ import (
 	"github.com/asweed888/clerk/template"
 )
 
-type python struct {}
+type c_python struct {}
 
 
-func (s *python) Exec(scm *schema.ClerkYaml) error {
+func (s *c_python) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
         codeFilePath := fmt.Sprintf(

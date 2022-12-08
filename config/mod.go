@@ -1,7 +1,7 @@
 package config
 
 type clerk struct {
-    JsConfig jsConfig
+    JsConfig c_jsConfig
 }
 
 var Clerk = &clerk{}

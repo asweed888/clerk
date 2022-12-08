@@ -13,10 +13,10 @@ import (
 	"github.com/asweed888/clerk/schema"
 )
 
-type shell struct {}
+type c_shell struct {}
 
 
-func (s *shell) Exec(scm *schema.ClerkYaml) error {
+func (s *c_shell) Exec(scm *schema.ClerkYaml) error {
     for _, lv0 := range scm.Spec {
 
 		// locationのディレクトリを作成する

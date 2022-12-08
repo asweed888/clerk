@@ -15,10 +15,10 @@ import (
 	"github.com/asweed888/clerk/template"
 )
 
-type golang struct {}
+type c_golang struct {}
 
 
-func (s *golang) Exec(scm *schema.ClerkYaml) error {
+func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
         codeFilePath := fmt.Sprintf(

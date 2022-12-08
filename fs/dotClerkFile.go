@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package fs
 
 import (
@@ -10,10 +10,10 @@ import (
 	"os"
 )
 
-type dotClerkFile struct {}
+type c_dotClerkFile struct {}
 
 
-func (s *dotClerkFile) Create(dirpath string) error {
+func (s *c_dotClerkFile) Create(dirpath string) error {
     outFilePath := fmt.Sprintf("./%s/.clerk", dirpath)
 
     if _, err := os.Stat(outFilePath); err != nil {
