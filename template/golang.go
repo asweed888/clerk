@@ -18,7 +18,7 @@ package {{ $location }}
 {{ printf "\n" -}}
 type clerk struct {
 {{ range .Level0.Upstream -}}
-{{"    "}}{{ .Name | ToTitle }} {{ .Name }}
+{{"    "}}{{ .Name | ToTitle }} c_{{ .Name }}
 {{ end -}}
 }
 {{ printf "\n" -}}
@@ -35,7 +35,7 @@ func (s *go_level1) FullTemplate() string {
 */
 package {{ $location }}
 
-type {{ .Level1.Name }} struct {}{{- printf "\n" -}}`
+type c_{{ .Level1.Name }} struct {}{{- printf "\n" -}}`
 }
 
 
@@ -52,7 +52,7 @@ func (s *go_level1) CommentTemplate() string {
 func (s *go_level1) MethodTemplate() string {
     return `
 
-func (s *%s) %s() {
+func (s *c_%s) %s() {
     println("this is clerk's default return value")
 }`
 }
