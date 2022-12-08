@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -99,7 +99,7 @@ func (s *golang) Exec(scm *schema.ClerkYaml) error {
 				if !fs.Clerk.CodeFileMethod.IsDefined(
 					fileContent,
 					fmt.Sprintf(
-						"func (s *%s) %s(",
+						"func (s *c_%s) %s(",
 						lv1.Name,
 						strings.Title(method),
 					),
