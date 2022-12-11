@@ -21,10 +21,6 @@ type c_golang struct {}
 func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
-        codeFilePath := fmt.Sprintf(
-            "./%s/mod.go",
-            lv0.Location,
-        )
 
 		// locationのディレクトリを作成する
 		if err := fs.Clerk.Directory.Create(lv0.Location); err != nil { return err }
@@ -38,15 +34,6 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
         if lv0.Comment != "" {
             continue
         }
-
-		// level0のコードファイルを書き出す
-		if err := fs.Clerk.CodeFile.Write(
-			codeFilePath,
-			template.Golang.Lv0.FullTemplate(),
-			map[string]interface{}{
-				"Level0": lv0,
-			},
-		); err != nil { return err }
 
 
 		for _, lv1 := range lv0.Upstream {
