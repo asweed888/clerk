@@ -99,7 +99,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 				if !fs.Clerk.CodeFileMethod.IsDefined(
 					fileContent,
 					fmt.Sprintf(
-						"func (s *c_%s) %s(",
+						"func (s *%s_mod) %s(",
 						lv1.Name,
 						strings.Title(method),
 					),
