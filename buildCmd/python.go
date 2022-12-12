@@ -26,15 +26,9 @@ func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
             "./%s/__init__.py",
             lv0.Location,
         )
-        codeFilePath2 := fmt.Sprintf(
-            "./%s/Clerk/__init__.py",
-            lv0.Location,
-        )
 
 		// locationのディレクトリを作成する
-		if err := fs.Directory.Create(
-            fmt.Sprintf("%s/Clerk", lv0.Location),
-        ); err != nil { return err }
+		if err := fs.Directory.Create(lv0.Location); err != nil { return err }
 
         // 作成されたディレクトリがclerkによって作成されたものである事がわかるように
         // .clerkというファイルを作成
@@ -46,16 +40,9 @@ func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
             continue
         }
 
-		// level0のコードファイルを書き出す
-		if err := fs.CodeFile.Write(
-			codeFilePath,
-			template.Python.Lv0.FullTemplate(),
-			map[string]interface{}{},
-		); err != nil { return err }
-
 		// level1のコードファイルを書き出す
 		if err := fs.CodeFile.Write(
-			codeFilePath2,
+			codeFilePath,
 			template.Python.Lv1.FullTemplate(),
 			map[string]interface{}{
 				"Level0": lv0,
@@ -65,7 +52,7 @@ func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
 
 		for _, lv2 := range lv0.Upstream {
 			codeFilePath := fmt.Sprintf(
-				"./%s/Clerk/%s.py",
+				"./%s/%s.py",
 				lv0.Location,
 				strings.Title(lv2.Name),
 			)
