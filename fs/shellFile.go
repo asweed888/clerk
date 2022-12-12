@@ -17,7 +17,7 @@ var ShellFile = &shellFileMod{}
 
 
 func (s *shellFileMod) Create(lang string, location string, upstream string, method string) error {
-    outFilePath := fmt.Sprintf("./%s/Clerk/%s/%s", location, upstream, method)
+    outFilePath := fmt.Sprintf("./%s/%s/%s", location, upstream, method)
     fileContents := fmt.Sprintf(`#!/bin/%s
 
 echo "this is clerk's default return value"`, lang)
