@@ -11,21 +11,6 @@ type go_level1 struct {}
 var Golang = &golang{}
 
 
-
-// func (s *go_level0) FullTemplate() string {
-//     return `{{ $location := .Level0.Location -}}
-// package {{ $location }}
-// {{ printf "\n" -}}
-// type clerk struct {
-// {{ range .Level0.Upstream -}}
-// {{"    "}}{{ .Name | ToTitle }} {{ .Name }}_mod
-// {{ end -}}
-// }
-// {{ printf "\n" -}}
-// var Clerk = &clerk{}`
-// }
-
-
 func (s *go_level1) FullTemplate() string {
     return `{{ $location := .Level0.Location -}}
 /* <location: {{ $location }}.{{ .Level1.Name }} />
@@ -35,8 +20,8 @@ func (s *go_level1) FullTemplate() string {
 */
 package {{ $location }}
 
-type {{ .Level1.Name }}_mod struct {}
-var {{ .Level1.Name | ToTitle }} = &{{ .Level1.Name }}_mod{}{{- printf "\n" -}}`
+type {{ .Level1.Name }}Mod struct {}
+var {{ .Level1.Name | ToTitle }} = &{{ .Level1.Name }}Mod{}{{- printf "\n" -}}`
 }
 
 
@@ -53,7 +38,7 @@ func (s *go_level1) CommentTemplate() string {
 func (s *go_level1) MethodTemplate() string {
     return `
 
-func (s *%s_mod) %s() {
+func (s *%sMod) %s() {
     println("this is clerk's default return value")
 }`
 }
