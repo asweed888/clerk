@@ -18,13 +18,11 @@ import {{ .Name | ToTitle }} from "./{{ .Name }}.{{ $ext }}"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
-const Clerk = {
+export {{ .JsConfig.ExportTo }}{
 {{ range .Level0.Upstream -}}
 {{"    "}}{{ .Name | ToTitle }}{{- printf ",\n"}}
 {{- end -}}
-}
-{{ printf "\n" -}}
-export {{ .JsConfig.ExportTo }}{ Clerk }`
+}`
 }
 
 
