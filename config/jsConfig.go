@@ -11,7 +11,8 @@ import (
 	"github.com/asweed888/clerk/schema"
 )
 
-type c_jsConfig struct {}
+type jsConfigMod struct {}
+var JsConfig = &jsConfigMod{}
 
 
 type jsConfigContents struct {
@@ -20,7 +21,7 @@ type jsConfigContents struct {
     ExportTo string
 }
 
-func (s *c_jsConfig) Get(scm *schema.ClerkYaml) (*jsConfigContents, error) {
+func (s *jsConfigMod) Get(scm *schema.ClerkYaml) (*jsConfigContents, error) {
     switch scm.Lang {
     case "deno":
         return &jsConfigContents{

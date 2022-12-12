@@ -23,23 +23,23 @@ var Build = &cobra.Command {
         }
         switch scm.Lang {
         case "go":
-            err = buildCmd.Clerk.Golang.Exec(scm)
+            err = buildCmd.Golang.Exec(scm)
         case "python":
-            err = buildCmd.Clerk.Python.Exec(scm)
+            err = buildCmd.Python.Exec(scm)
         case "deno":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "denojs":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "nodejs":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "nodets":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "jsx":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "tsx":
-            err = buildCmd.Clerk.Modernjs.Exec(scm)
+            err = buildCmd.Modernjs.Exec(scm)
         case "bash":
-            err = buildCmd.Clerk.Shell.Exec(scm)
+            err = buildCmd.Shell.Exec(scm)
         default:
             return fmt.Errorf("Invalid language designation")
         }

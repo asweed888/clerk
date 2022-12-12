@@ -7,10 +7,11 @@ package fs
 
 import "os"
 
-type c_directory struct {}
+type directoryMod struct {}
+var Directory = &directoryMod{}
 
 
-func (s *c_directory) Create(dirpath string) error {
+func (s *directoryMod) Create(dirpath string) error {
     if err := os.MkdirAll(dirpath, os.ModePerm); err != nil {
         return err
     }

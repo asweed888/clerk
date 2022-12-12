@@ -12,10 +12,11 @@ import (
 	"strconv"
 )
 
-type c_shellFile struct {}
+type shellFileMod struct {}
+var ShellFile = &shellFileMod{}
 
 
-func (s *c_shellFile) Create(lang string, location string, upstream string, method string) error {
+func (s *shellFileMod) Create(lang string, location string, upstream string, method string) error {
     outFilePath := fmt.Sprintf("./%s/Clerk/%s/%s", location, upstream, method)
     fileContents := fmt.Sprintf(`#!/bin/%s
 
