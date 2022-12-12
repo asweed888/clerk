@@ -13,11 +13,6 @@ type py_level2 struct {}
 var Python = &python{}
 
 
-func (s *py_level0) FullTemplate() string {
-    return "from . import Clerk"
-}
-
-
 func (s *py_level1) FullTemplate() string {
     return `from . import (
 {{ range .Level0.Upstream -}}
