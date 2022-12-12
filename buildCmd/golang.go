@@ -15,19 +15,20 @@ import (
 	"github.com/asweed888/clerk/template"
 )
 
-type c_golang struct {}
+type golangMod struct {}
+var Golang = &golangMod{}
 
 
-func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
+func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
 
 		// locationのディレクトリを作成する
-		if err := fs.Clerk.Directory.Create(lv0.Location); err != nil { return err }
+		if err := fs.Directory.Create(lv0.Location); err != nil { return err }
 
         // 作成されたディレクトリがclerkによって作成されたものである事がわかるように
         // .clerkというファイルを作成
-		if err := fs.Clerk.DotClerkFile.Create(lv0.Location); err != nil { return err }
+		if err := fs.DotClerkFile.Create(lv0.Location); err != nil { return err }
 
         // location rootにコメントが記載された場合は
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
@@ -47,7 +48,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
             // moduleのファイルが存在していない場合
 
 				// level1のコードファイルを書き出す
-				if err := fs.Clerk.CodeFile.Write(
+				if err := fs.CodeFile.Write(
 					codeFilePath,
 					template.Golang.Lv1.FullTemplate(),
 					map[string]interface{}{
@@ -59,7 +60,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
             // moduleのファイルが存在している場合
 
 				// コードファイルのコメント部分を更新する
-				if err := fs.Clerk.CodeFile.Replace(
+				if err := fs.CodeFile.Replace(
 					codeFilePath,
 					`/\* <location:[\s\S\n]*?\*/`,
 					template.Utils.FillTemplate(
@@ -74,7 +75,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 
             // メソッドの自動書き出し機能
             // 未定義のメソッドをファイル行末に追加
-            fileContent, err := fs.Clerk.CodeFile.Read(codeFilePath)
+            fileContent, err := fs.CodeFile.Read(codeFilePath)
             if err != nil {
                 return err
             }
@@ -83,7 +84,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 				methodTemplate := template.Golang.Lv1.MethodTemplate()
 
                 // コードファイル内でmethodが定義されていない場合
-				if !fs.Clerk.CodeFileMethod.IsDefined(
+				if !fs.CodeFileMethod.IsDefined(
 					fileContent,
 					fmt.Sprintf(
 						"func (s *%sMod) %s(",
@@ -92,7 +93,7 @@ func (s *c_golang) Exec(scm *schema.ClerkYaml) error {
 					),
 				) {
                     // コードファイルにmethodを追記する
-					err = fs.Clerk.CodeFileMethod.Append(
+					err = fs.CodeFileMethod.Append(
 						codeFilePath,
 						methodTemplate,
 						lv1.Name,

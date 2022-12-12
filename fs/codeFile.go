@@ -14,10 +14,11 @@ import (
 	"text/template"
 )
 
-type c_codeFile struct {}
+type codeFileMod struct {}
+var CodeFile = &codeFileMod{}
 
 
-func (s *c_codeFile) Read(codeFilePath string) (string, error) {
+func (s *codeFileMod) Read(codeFilePath string) (string, error) {
     file, err := os.Open(codeFilePath)
     if err != nil {
         return "", err
@@ -33,7 +34,7 @@ func (s *c_codeFile) Read(codeFilePath string) (string, error) {
 }
 
 
-func (s *c_codeFile) Write(codeFilePath string, tmplString string, inputData interface{}) error {
+func (s *codeFileMod) Write(codeFilePath string, tmplString string, inputData interface{}) error {
     funcMap := template.FuncMap{
         "ToTitle": strings.Title,
     }
@@ -57,7 +58,7 @@ func (s *c_codeFile) Write(codeFilePath string, tmplString string, inputData int
 }
 
 
-func (s *c_codeFile) Replace(codeFilePath string, fromString string, toString string) error {
+func (s *codeFileMod) Replace(codeFilePath string, fromString string, toString string) error {
     replaceTarget := regexp.MustCompile(fromString)
     bytes, err := ioutil.ReadFile(codeFilePath)
 	if err != nil {

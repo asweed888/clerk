@@ -16,12 +16,13 @@ import (
 	"github.com/asweed888/clerk/template"
 )
 
-type c_modernjs struct {}
+type modernjsMod struct {}
+var Modernjs = &modernjsMod{}
 
 
-func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
+func (s *modernjsMod) Exec(scm *schema.ClerkYaml) error {
 
-    jsConfig, err := config.Clerk.JsConfig.Get(scm)
+    jsConfig, err := config.JsConfig.Get(scm)
     if err != nil { return err }
 
     for _, lv0 := range scm.Spec {
@@ -33,11 +34,11 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
         )
 
 		// locationのディレクトリを作成する
-		if err := fs.Clerk.Directory.Create(lv0.Location); err != nil { return err }
+		if err := fs.Directory.Create(lv0.Location); err != nil { return err }
 
         // 作成されたディレクトリがclerkによって作成されたものである事がわかるように
         // .clerkというファイルを作成
-		if err := fs.Clerk.DotClerkFile.Create(lv0.Location); err != nil { return err }
+		if err := fs.DotClerkFile.Create(lv0.Location); err != nil { return err }
 
         // location rootにコメントが記載された場合は
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
@@ -46,7 +47,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
         }
 
 		// level0のコードファイルを書き出す
-		if err := fs.Clerk.CodeFile.Write(
+		if err := fs.CodeFile.Write(
 			codeFilePath,
 			template.Modernjs.Lv0.FullTemplate(),
 			map[string]interface{}{
@@ -68,7 +69,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
             // moduleのファイルが存在していない場合
 
 				// level1のコードファイルを書き出す
-				if err := fs.Clerk.CodeFile.Write(
+				if err := fs.CodeFile.Write(
 					codeFilePath,
 					template.Modernjs.Lv1.FullTemplate(),
 					map[string]interface{}{
@@ -80,7 +81,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
             // moduleのファイルが存在している場合
 
 				// コードファイルのコメント部分を更新する
-				if err := fs.Clerk.CodeFile.Replace(
+				if err := fs.CodeFile.Replace(
 					codeFilePath,
 					`/\* <location:[\s\S\n]*?\*/`,
 					template.Utils.FillTemplate(
@@ -93,7 +94,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
 				); err != nil { return err }
 
 				// コードファイルのexport部分を更新する
-				if err := fs.Clerk.CodeFile.Replace(
+				if err := fs.CodeFile.Replace(
 					codeFilePath,
 					`export default[\s\S\n]*?\/\/ end export`,
 					template.Utils.FillTemplate(
@@ -108,7 +109,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
 
             // メソッドの自動書き出し機能
             // 未定義のメソッドをファイル行末に追加
-            fileContent, err := fs.Clerk.CodeFile.Read(codeFilePath)
+            fileContent, err := fs.CodeFile.Read(codeFilePath)
             if err != nil {
                 return err
             }
@@ -117,7 +118,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
 				methodTemplate := template.Modernjs.Lv1.MethodTemplate()
 
                 // コードファイル内でmethodが定義されていない場合
-				if !fs.Clerk.CodeFileMethod.IsDefined(
+				if !fs.CodeFileMethod.IsDefined(
 					fileContent,
 					fmt.Sprintf(
 						"function %s(",
@@ -125,7 +126,7 @@ func (s *c_modernjs) Exec(scm *schema.ClerkYaml) error {
 					),
 				) {
                     // コードファイルにmethodを追記する
-					err = fs.Clerk.CodeFileMethod.Append(
+					err = fs.CodeFileMethod.Append(
 						codeFilePath,
 						methodTemplate,
 						strings.Title(method),

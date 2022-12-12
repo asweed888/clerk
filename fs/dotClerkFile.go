@@ -10,10 +10,11 @@ import (
 	"os"
 )
 
-type c_dotClerkFile struct {}
+type dotClerkFileMod struct {}
+var DotClerkFile = &dotClerkFileMod{}
 
 
-func (s *c_dotClerkFile) Create(dirpath string) error {
+func (s *dotClerkFileMod) Create(dirpath string) error {
     outFilePath := fmt.Sprintf("./%s/.clerk", dirpath)
 
     if _, err := os.Stat(outFilePath); err != nil {
