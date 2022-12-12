@@ -45,6 +45,13 @@ spec:
         - isDefined
         - append
 
+- location: goModFile
+  upstream:
+    - name: moduleName
+      comment: go.modファイルの1行目のmodule名
+      methods:
+        - get
+
 
 - location: buildCmd
   upstream:
