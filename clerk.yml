@@ -9,13 +9,24 @@ spec:
 - location: template
   comment: 各言語のテンプレート
 
-
 - location: config
   upstream:
     - name: jsConfig
       comment: modernjsの設定
       methods:
         - get
+
+    - name: goConfig
+      comment: goの設定
+      methods:
+        - get
+
+
+- location: utils
+  upstream:
+    - name: golang
+      methods:
+        - exportable
 
 
 - location: fs
@@ -44,13 +55,6 @@ spec:
       methods:
         - isDefined
         - append
-
-- location: goModFile
-  upstream:
-    - name: moduleName
-      comment: go.modファイルの1行目のmodule名
-      methods:
-        - get
 
 
 - location: buildCmd

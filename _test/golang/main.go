@@ -1,7 +1,8 @@
 package main
 
-import "demo/greet"
+import "github.com/inadati/demo.go/nestapp"
+
 
 func main() {
-    greet.Clerk.Hello.Print()
+    nestapp.Greet.English.Print()
 }
