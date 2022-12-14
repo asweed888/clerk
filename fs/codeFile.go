@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"strings"
 	"text/template"
+    "github.com/asweed888/clerk/utils"
 )
 
 type codeFileMod struct {}
@@ -37,6 +38,7 @@ func (s *codeFileMod) Read(codeFilePath string) (string, error) {
 func (s *codeFileMod) Write(codeFilePath string, tmplString string, inputData interface{}) error {
     funcMap := template.FuncMap{
         "ToTitle": strings.Title,
+        "ToExportable": utils.Golang.Exportable,
     }
     tmpl, err := template.New("clerk").Funcs(funcMap).Parse(tmplString)
     if err != nil {

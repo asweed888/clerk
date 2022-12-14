@@ -10,9 +10,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/asweed888/clerk/config"
 	"github.com/asweed888/clerk/fs"
 	"github.com/asweed888/clerk/schema"
 	"github.com/asweed888/clerk/template"
+	"github.com/asweed888/clerk/utils"
 )
 
 type golangMod struct {}
@@ -20,6 +22,11 @@ var Golang = &golangMod{}
 
 
 func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
+
+	goConfig, err := config.GoConfig.Get()
+	if err != nil {
+		return err
+	}
 
     for _, lv0 := range scm.Spec {
 
@@ -34,6 +41,17 @@ func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
         if lv0.Comment != "" {
             continue
+        }
+
+        if scm.Export {
+            if err := fs.CodeFile.Write(
+                "./mod.go",
+                template.Golang.Lv0.ExportGo(),
+                map[string]interface{}{
+                    "GoConfig": goConfig,
+                    "Spec": scm.Spec,
+                },
+            ); err != nil { return err }
         }
 
 
@@ -52,10 +70,11 @@ func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
 					codeFilePath,
 					template.Golang.Lv1.FullTemplate(),
 					map[string]interface{}{
+                        "IsExport": scm.Export,
 						"Level0": lv0,
 						"Level1": lv1,
 					},
-				); err != nil { return nil }
+				); err != nil { return err }
 			} else {
             // moduleのファイルが存在している場合
 
@@ -88,7 +107,7 @@ func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
 					fileContent,
 					fmt.Sprintf(
 						"func (s *%sMod) %s(",
-						lv1.Name,
+						utils.Golang.Exportable(scm.Export, lv1.Name),
 						strings.Title(method),
 					),
 				) {
@@ -96,7 +115,7 @@ func (s *golangMod) Exec(scm *schema.ClerkYaml) error {
 					err = fs.CodeFileMethod.Append(
 						codeFilePath,
 						methodTemplate,
-						lv1.Name,
+						utils.Golang.Exportable(scm.Export, lv1.Name),
 						strings.Title(method),
 					)
 					if err != nil {
