@@ -33,7 +33,7 @@ func appName() (string, error) {
 
 
 func goModName() (string, error) {
-    f, _ := os.Open("./go.mod")
+    f, _ := os.Open("../go.mod")
 	bu := bufio.NewReaderSize(f, 1024)
     line, _, err := bu.ReadLine()
     if err == io.EOF {
