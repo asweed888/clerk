@@ -13,7 +13,14 @@ var Golang = &golang{}
 
 func (s *go_level0) ExportGo() string {
     return `{{ $appName := .GoConfig.AppName -}}
+{{ $goModName := .GoConfig.GoModName -}}
 package {{ $appName }}
+{{ printf "\n" -}}
+import (
+{{ range .Spec -}}
+{{"    "}}"{{ $goModName }}/{{ $appName }}/{{ .Location }}"{{- printf "\n"}}
+{{- end -}}
+){{- printf "\n" -}}
 {{ printf "\n" -}}
 {{ range .Spec -}}
 var {{ .Location | ToTitle }} = &{{ .Location }}Mod{}{{- printf "\n"}}
