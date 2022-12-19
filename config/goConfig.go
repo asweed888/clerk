@@ -9,8 +9,9 @@ import (
 	"bufio"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
+
+	"github.com/asweed888/clerk/metadata"
 )
 
 type goConfigMod struct {}
@@ -20,15 +21,6 @@ var GoConfig = &goConfigMod{}
 type goConfigContents struct {
     AppName string
     GoModName string
-}
-
-
-func appName() (string, error) {
-    wd, err := os.Getwd()
-    if err != nil {
-        return "", err
-    }
-    return filepath.Base(wd), err
 }
 
 
@@ -44,9 +36,8 @@ func goModName() (string, error) {
 }
 
 
-
 func (s *goConfigMod) Get() (*goConfigContents, error){
-    an, err := appName()
+    an, err := metadata.ClerkAppName.Get()
     if err != nil {
         return &goConfigContents{}, err
     }

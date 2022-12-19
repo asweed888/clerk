@@ -9,6 +9,14 @@ spec:
 - location: template
   comment: 各言語のテンプレート
 
+- location: metadata
+  upstream:
+    - name: clerkAppName
+      comment: clerk.ymlがあるディレクトリ名
+      methods:
+        - get
+
+
 - location: config
   upstream:
     - name: jsConfig
