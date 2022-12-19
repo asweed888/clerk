@@ -11,6 +11,24 @@ type js_level1 struct {}
 var Modernjs = &modernjs{}
 
 
+func (s *js_level0) ExportFile() string {
+    return `{{ $appName := .JsConfig.AppName -}}
+{{ $codeFileName := .JsConfig.CodeFileName -}}
+{{ $codeFileExt := .JsConfig.CodeFileExt -}}
+{{ $rootExportTo := .JsConfig.RootExportTo -}}
+{{ range .Spec -}}
+import {{ .Location | ToTitle }} from "./{{ .Location }}/{{ $codeFileName }}.{{ $codeFileExt }}"{{- printf "\n"}}
+{{- end -}}
+{{ printf "\n" -}}
+{{ printf "\n" -}}
+export {{ $rootExportTo }}{
+{{ range .Spec -}}
+{{"    "}}{{ .Location | ToTitle }}{{- printf ",\n"}}
+{{- end -}}
+}`
+}
+
+
 func (s *js_level0) FullTemplate() string {
     return `{{ $ext := .JsConfig.CodeFileExt -}}
 {{ range .Level0.Upstream -}}

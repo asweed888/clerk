@@ -1,4 +1,4 @@
-/* <location: greet.hello />
+/* <location: greet.english />
 
 hello world
 
@@ -6,16 +6,10 @@ hello world
 
 export default {
     Print,
-    Get,
 }
 // end export
 
 
 function Print(){
-    console.log("this is clerk's default return value")
-}
-
-
-function Get(){
     console.log("this is clerk's default return value")
 }

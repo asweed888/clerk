@@ -2,8 +2,7 @@ lang: deno
 spec:
 - location: greet
   upstream:
-    - name: hello
+    - name: english
       comment: hello world
       methods:
         - print
-        - get

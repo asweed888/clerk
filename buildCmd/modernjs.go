@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -44,6 +44,22 @@ func (s *modernjsMod) Exec(scm *schema.ClerkYaml) error {
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
         if lv0.Comment != "" {
             continue
+        }
+
+        if scm.Export {
+            codeFilePath := fmt.Sprintf(
+                "./%s.%s",
+                jsConfig.CodeFileName,
+                jsConfig.CodeFileExt,
+            )
+            if err := fs.CodeFile.Write(
+                codeFilePath,
+                template.Modernjs.Lv0.ExportFile(),
+                map[string]interface{}{
+                    "JsConfig": jsConfig,
+                    "Spec": scm.Spec,
+                },
+            ); err != nil { return err }
         }
 
 		// level0のコードファイルを書き出す
