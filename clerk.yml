@@ -67,6 +67,10 @@ spec:
 
 - location: buildCmd
   upstream:
+    - name: rust
+      methods:
+        - exec
+
     - name: golang
       methods:
         - exec

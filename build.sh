@@ -4,6 +4,7 @@ mkdir -p ./_test
 
 langs=(
     golang \
+    rust \
     modernjs \
     python \
     bash \

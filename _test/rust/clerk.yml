@@ -1,0 +1,14 @@
+lang: rust
+spec:
+- location: greet
+  upstream:
+    - name: english
+      comment: hello world
+      methods:
+        - print
+        - print2
+
+    - name: japanese
+      comment: こんにちは
+      methods:
+        - print
