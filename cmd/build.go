@@ -24,6 +24,8 @@ var Build = &cobra.Command {
         switch scm.Lang {
         case "go":
             err = buildCmd.Golang.Exec(scm)
+        case "rust":
+            err = buildCmd.Rust.Exec(scm)
         case "python":
             err = buildCmd.Python.Exec(scm)
         case "deno":
