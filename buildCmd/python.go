@@ -2,7 +2,7 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
@@ -38,6 +38,17 @@ func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
         if lv0.Comment != "" {
             continue
+        }
+
+        // export: trueの場合
+        if scm.Export {
+            if err := fs.CodeFile.Write(
+                "./__init__.py",
+                template.Python.Lv0.RootExportFile(),
+                map[string]interface{}{
+                    "Spec": scm.Spec,
+                },
+            ); err != nil { return err }
         }
 
 		// level1のコードファイルを書き出す

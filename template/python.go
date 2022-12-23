@@ -13,6 +13,14 @@ type py_level2 struct {}
 var Python = &python{}
 
 
+func (s *py_level0) RootExportFile() string {
+    return `from . import (
+{{ range .Spec -}}
+{{"    "}}{{ .Location }},
+{{ end -}}
+){{ printf "\n" -}}`
+}
+
 func (s *py_level1) FullTemplate() string {
     return `from . import (
 {{ range .Level0.Upstream -}}
