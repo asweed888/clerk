@@ -1,5 +1,8 @@
 lang: rust
 spec:
+- location: nestapp
+  comment: ネストアプリ
+
 - location: greet
   upstream:
     - name: english

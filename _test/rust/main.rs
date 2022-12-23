@@ -1,5 +1,5 @@
-mod greet;
+mod nestapp;
 
 fn main(){
-    greet::english::print();
+    nestapp::greet::japanese::print()
 }
