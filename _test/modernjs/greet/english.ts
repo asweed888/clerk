@@ -5,11 +5,11 @@ hello world
 */
 
 export default {
-    Print,
+    print,
 }
 // end export
 
 
-function Print(){
+function print(){
     console.log("this is clerk's default return value")
 }

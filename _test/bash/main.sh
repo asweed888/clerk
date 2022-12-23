@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./greet/Clerk/Hello/Print John
+./greet/english/print

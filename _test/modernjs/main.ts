@@ -1,4 +1,5 @@
-import greet from "./greet/mod.ts"
+// import greet from "./greet/mod.ts"
+import nestapp from "./nestapp/mod.ts"
 
 
-greet.English.Print()
+nestapp.greet.english.print()

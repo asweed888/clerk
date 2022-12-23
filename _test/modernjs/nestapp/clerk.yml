@@ -1,0 +1,9 @@
+export: true
+lang: deno
+spec:
+- location: greet
+  upstream:
+    - name: english
+      comment: hello world
+      methods:
+        - print

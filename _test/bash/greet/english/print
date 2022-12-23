@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "this is clerk's default return value"

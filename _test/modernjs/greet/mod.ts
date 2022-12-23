@@ -1,6 +1,6 @@
-import English from "./english.ts"
+import english from "./english.ts"
 
 
 export default {
-    English,
+    english,
 }

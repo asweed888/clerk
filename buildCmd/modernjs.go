@@ -2,13 +2,12 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/asweed888/clerk/config"
 	"github.com/asweed888/clerk/fs"
@@ -138,14 +137,14 @@ func (s *modernjsMod) Exec(scm *schema.ClerkYaml) error {
 					fileContent,
 					fmt.Sprintf(
 						"function %s(",
-						strings.Title(method),
+                        method,
 					),
 				) {
                     // コードファイルにmethodを追記する
 					err = fs.CodeFileMethod.Append(
 						codeFilePath,
 						methodTemplate,
-						strings.Title(method),
+                        method,
 					)
 					if err != nil {
 						return err
