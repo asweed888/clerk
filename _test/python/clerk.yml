@@ -2,7 +2,7 @@ lang: python
 spec:
 - location: greet
   upstream:
-    - name: hello
-      comment: hello worldで挨拶
+    - name: english
+      comment: hello
       methods:
         - print

@@ -1,0 +1,9 @@
+export: true
+lang: python
+spec:
+- location: greet
+  upstream:
+    - name: english
+      comment: hello
+      methods:
+        - print
