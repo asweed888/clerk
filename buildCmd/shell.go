@@ -2,12 +2,11 @@
 
 
 
-*/
+ */
 package buildCmd
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/asweed888/clerk/fs"
 	"github.com/asweed888/clerk/schema"
@@ -39,10 +38,10 @@ func (s *shellMod) Exec(scm *schema.ClerkYaml) error {
 
 				// method fileの書き出し先のディレクトリを作成
 				if err := fs.Directory.Create(
-					fmt.Sprintf("%s/%s", lv0.Location, strings.Title(lv2.Name)),
+					fmt.Sprintf("%s/%s", lv0.Location, lv2.Name),
 				); err != nil { return err }
 
-				fs.ShellFile.Create(scm.Lang, lv0.Location, strings.Title(lv2.Name), strings.Title(method))
+				fs.ShellFile.Create(scm.Lang, lv0.Location, lv2.Name, method)
 
             }
         }

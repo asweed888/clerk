@@ -17,13 +17,13 @@ func (s *js_level0) ExportFile() string {
 {{ $codeFileExt := .JsConfig.CodeFileExt -}}
 {{ $rootExportTo := .JsConfig.RootExportTo -}}
 {{ range .Spec -}}
-import {{ .Location | ToTitle }} from "./{{ .Location }}/{{ $codeFileName }}.{{ $codeFileExt }}"{{- printf "\n"}}
+import {{ .Location }} from "./{{ .Location }}/{{ $codeFileName }}.{{ $codeFileExt }}"{{- printf "\n"}}
 {{- end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
 export {{ $rootExportTo }}{
 {{ range .Spec -}}
-{{"    "}}{{ .Location | ToTitle }}{{- printf ",\n"}}
+{{"    "}}{{ .Location }}{{- printf ",\n"}}
 {{- end -}}
 }`
 }
@@ -32,13 +32,13 @@ export {{ $rootExportTo }}{
 func (s *js_level0) FullTemplate() string {
     return `{{ $ext := .JsConfig.CodeFileExt -}}
 {{ range .Level0.Upstream -}}
-import {{ .Name | ToTitle }} from "./{{ .Name }}.{{ $ext }}"
+import {{ .Name }} from "./{{ .Name }}.{{ $ext }}"
 {{ end -}}
 {{ printf "\n" -}}
 {{ printf "\n" -}}
 export {{ .JsConfig.ExportTo }}{
 {{ range .Level0.Upstream -}}
-{{"    "}}{{ .Name | ToTitle }}{{- printf ",\n"}}
+{{"    "}}{{ .Name }}{{- printf ",\n"}}
 {{- end -}}
 }`
 }
@@ -54,7 +54,7 @@ func (s *js_level1) FullTemplate() string {
 
 export default {
 {{ range .Level1.Methods -}}
-{{"    "}}{{ . | ToTitle }}{{- printf ",\n" -}}
+{{"    "}}{{ . }}{{- printf ",\n" -}}
 {{- end -}}
 }
 // end export{{- printf "\n" -}}`
@@ -74,7 +74,7 @@ func (s *js_level1) CommentTemplate() string {
 func (s *js_level1) ExportTemplate() string {
     return `export default {
 {{ range .Level1.Methods -}}
-{{"    "}}{{ . | ToTitle }}{{- printf ",\n" -}}
+{{"    "}}{{ . }}{{- printf ",\n" -}}
 {{- end -}}
 }
 // end export`
