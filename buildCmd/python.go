@@ -13,6 +13,7 @@ import (
 	"github.com/asweed888/clerk/fs"
 	"github.com/asweed888/clerk/schema"
 	"github.com/asweed888/clerk/template"
+	"github.com/asweed888/clerk/utils"
 )
 
 type pythonMod struct {}
@@ -22,17 +23,18 @@ var Python = &pythonMod{}
 func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
 
     for _, lv0 := range scm.Spec {
+        loc := utils.Golang.Exportable(scm.Export, lv0.Location)
         codeFilePath := fmt.Sprintf(
             "./%s/__init__.py",
-            lv0.Location,
+            loc,
         )
 
 		// locationのディレクトリを作成する
-		if err := fs.Directory.Create(lv0.Location); err != nil { return err }
+		if err := fs.Directory.Create(loc); err != nil { return err }
 
         // 作成されたディレクトリがclerkによって作成されたものである事がわかるように
         // .clerkというファイルを作成
-		if err := fs.DotClerkFile.Create(lv0.Location); err != nil { return err }
+		if err := fs.DotClerkFile.Create(loc); err != nil { return err }
 
         // location rootにコメントが記載された場合は
         // locationのディレクトリのみを作成してモジュール書き出し等の処理は行わない
@@ -64,7 +66,7 @@ func (s *pythonMod) Exec(scm *schema.ClerkYaml) error {
 		for _, lv2 := range lv0.Upstream {
 			codeFilePath := fmt.Sprintf(
 				"./%s/%s.py",
-				lv0.Location,
+				loc,
 				strings.Title(lv2.Name),
 			)
 

@@ -16,7 +16,7 @@ var Python = &python{}
 func (s *py_level0) RootExportFile() string {
     return `from . import (
 {{ range .Spec -}}
-{{"    "}}{{ .Location }},
+{{"    "}}{{ .Location | ToTitle }},
 {{ end -}}
 ){{ printf "\n" -}}`
 }
