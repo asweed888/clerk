@@ -1,88 +1,25 @@
 lang: go
 spec:
 - location: cmd
-  comment: 各コマンドの管理用ディレクトリ
+  comment: コマンドをまとめるパッケージ
 
-- location: schema
-  comment: clerk.yml
-
-- location: template
-  comment: 各言語のテンプレート
-
-- location: metadata
+- location: data
   upstream:
-    - name: clerkAppName
-      comment: clerk.ymlがあるディレクトリ名
-      methods:
+    - name: schema
+      comment: 出力するclerkの構造、yamlファイル
+      function:
+        - read
+
+    - name: config
+      comment: 各言語毎の出力先ファイルパスなどを取り扱う
+      function:
         - get
-
-
-- location: config
-  upstream:
-    - name: jsConfig
-      comment: modernjsの設定
-      methods:
-        - get
-
-    - name: goConfig
-      comment: goの設定
-      methods:
-        - get
-
-
-- location: utils
-  upstream:
-    - name: golang
-      methods:
-        - exportable
 
 
 - location: fs
   upstream:
-    - name: directory
-      comment: 指定されたディレクトリへの操作
-      methods:
-        - create
-
-    - name: shellFile
-      comment: 実行可能なshellのためのファイル
-      methods:
-        - create
-
-    - name: dotClerkFile
-      methods:
-        - create
-
-    - name: codeFile
-      methods:
-        - read
-        - write
-        - replace
-
-    - name: codeFileMethod
-      methods:
-        - isDefined
-        - append
-
-
-- location: buildCmd
-  upstream:
-    - name: rust
-      methods:
-        - exec
-
-    - name: golang
-      methods:
-        - exec
-
-    - name: modernjs
-      methods:
-        - exec
-
-    - name: python
-      methods:
-        - exec
-
-    - name: shell
-      methods:
-        - exec
+    - name: path
+      comment: |-
+        %s/%s/%s の形式のフォーマットに対し配列で渡した文字列を適用した文字列
+      function:
+        - get
