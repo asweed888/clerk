@@ -1,0 +1,6 @@
+export: true
+lang: go
+spec:
+- location: infra
+
+- location: ui
