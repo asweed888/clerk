@@ -1,25 +1,10 @@
 lang: go
 spec:
-- location: cmd
-  comment: コマンドをまとめるパッケージ
+- location: adapter
+  comment: ユースケース
 
-- location: data
-  upstream:
-    - name: schema
-      comment: 出力するclerkの構造、yamlファイル
-      function:
-        - read
+- location: app
+  comment: アプリケーション
 
-    - name: config
-      comment: 各言語毎の出力先ファイルパスなどを取り扱う
-      function:
-        - get
-
-
-- location: fs
-  upstream:
-    - name: path
-      comment: |-
-        %s/%s/%s の形式のフォーマットに対し配列で渡した文字列を適用した文字列
-      function:
-        - get
+- location: domain
+  comment: ドメインモデル
