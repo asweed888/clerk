@@ -1,10 +1,13 @@
 lang: go
 spec:
-- location: adapter
-  comment: ユースケース
+- location: ui
+  comment: ユーザーインターフェースとなるアダプタ
 
-- location: app
-  comment: アプリケーション
+- location: infrastructure
+  comment: インフラのアダプタ
+
+- location: application
+  comment: アプリケーション層
 
 - location: domain
   comment: ドメインモデル
