@@ -1,13 +1,16 @@
 lang: go
 spec:
 - location: ui
-  comment: ユーザーインターフェースとなるアダプタ
+  comment: ユーザー向けアダプタ
 
 - location: infrastructure
-  comment: インフラのアダプタ
+  comment: インフラ向けアダプタ
 
-- location: application
+- location: usecase
   comment: アプリケーション層
 
 - location: domain
-  comment: ドメインモデル
+  comment: ドメイン層
+
+- location: interactor
+  comment: 依存解決
