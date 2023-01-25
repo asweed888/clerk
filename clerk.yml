@@ -3,7 +3,7 @@ spec:
 - location: ui
   comment: ユーザー向けアダプタ
 
-- location: infrastructure
+- location: infra
   comment: インフラ向けアダプタ
 
 - location: usecase
