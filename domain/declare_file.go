@@ -1,6 +1,6 @@
 package domain
 
-type ClerkYaml struct {
+type Declare struct {
     Export bool `yaml:"export"`
 	Lang   string `yaml:"lang"`
 	Spec   []struct {
@@ -14,18 +14,18 @@ type ClerkYaml struct {
 	} `yaml:"spec"`
 }
 
-type ClerkYamlRepository interface {
-    Load() (*ClerkYaml, error)
+type DeclareRepository interface {
+    Load() (*Declare, error)
 }
 
 
-type ClerkYamlService interface {}
+type DeclareService interface {}
 
-type clerkYamlService struct {
-    ClerkYamlRepository
+type declareService struct {
+    DeclareRepository
 }
 
 
-func NewClerkYamlService(r ClerkYamlRepository) ClerkYamlService {
-    return &clerkYamlService{r}
+func NewDeclareService(r DeclareRepository) DeclareService {
+    return &declareService{r}
 }
