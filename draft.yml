@@ -1,0 +1,47 @@
+lang: go
+spec:
+- location: domain
+  upstream:
+    - name: model
+      codefile:
+        - name: user
+          label: domain_model_user
+          description: |-
+
+    - name: repository
+      codefile:
+        - name: user
+          label: domain_repo_user
+          description: |-
+
+    - name: service
+      codefile:
+        - name: user
+          label: domain_service_user
+          description: |-
+
+
+- location: usecase
+  codefile:
+    - name: user
+      label: usecase_user
+      description: |-
+
+
+- location: infrastructure
+  upstream:
+    - name: persistance
+      upstream:
+        - name: datastore
+          codefile:
+            - name: user
+
+
+codefile:
+  - label: domain_model_user
+    struct:
+      - name: User
+
+  - label: domain_repo_user
+    interface:
+      - name: UserRepository
