@@ -1,8 +1,0 @@
-lang: bash
-spec:
-- location: greet
-  upstream:
-    - name: english
-      comment: hello world
-      methods:
-        - print

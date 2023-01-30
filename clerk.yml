@@ -1,88 +1,24 @@
 lang: go
 spec:
-- location: cmd
-  comment: 各コマンドの管理用ディレクトリ
-
-- location: schema
-  comment: clerk.yml
-
-- location: template
-  comment: 各言語のテンプレート
-
-- location: metadata
+- location: domain
   upstream:
-    - name: clerkAppName
-      comment: clerk.ymlがあるディレクトリ名
-      methods:
-        - get
+    - name: model
+      codefile:
+        - name: declare
+          label: domain_model_declare
+          description: |-
+            宣言ファイルのデータモデル
 
+    - name: repository
+      codefile:
+        - name: declare
+          label: domain_repo_declare
+          description: |-
+            宣言ファイルデータのリポジトリ
 
-- location: config
-  upstream:
-    - name: jsConfig
-      comment: modernjsの設定
-      methods:
-        - get
-
-    - name: goConfig
-      comment: goの設定
-      methods:
-        - get
-
-
-- location: utils
-  upstream:
-    - name: golang
-      methods:
-        - exportable
-
-
-- location: fs
-  upstream:
-    - name: directory
-      comment: 指定されたディレクトリへの操作
-      methods:
-        - create
-
-    - name: shellFile
-      comment: 実行可能なshellのためのファイル
-      methods:
-        - create
-
-    - name: dotClerkFile
-      methods:
-        - create
-
-    - name: codeFile
-      methods:
-        - read
-        - write
-        - replace
-
-    - name: codeFileMethod
-      methods:
-        - isDefined
-        - append
-
-
-- location: buildCmd
-  upstream:
-    - name: rust
-      methods:
-        - exec
-
-    - name: golang
-      methods:
-        - exec
-
-    - name: modernjs
-      methods:
-        - exec
-
-    - name: python
-      methods:
-        - exec
-
-    - name: shell
-      methods:
-        - exec
+    - name: service
+      codefile:
+        - name: declare
+          label: domain_svc_declare
+          description: |-
+            宣言ファイルのドメインサービス
