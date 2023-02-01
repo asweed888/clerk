@@ -5,27 +5,28 @@ spec:
     - name: model
       codefile:
         - name: user
-          label: domain_model_user
-          description: |-
+          description: ユーザーのデータモデル
+          struct:
+            - User
 
     - name: repository
       codefile:
         - name: user
-          label: domain_repo_user
-          description: |-
+          description: ユーザーのデータリポジトリinfrastructureとの接続
+          interface:
+            - UserRepository
 
     - name: service
       codefile:
         - name: user
-          label: domain_service_user
-          description: |-
+          description: ユーザーのusecase向けサービス
 
 
 - location: usecase
   codefile:
     - name: user
-      label: usecase_user
-      description: |-
+      description: ユーザーのpresentation層、テストなど向けのapi
+
 
 
 - location: infrastructure
@@ -35,13 +36,3 @@ spec:
         - name: datastore
           codefile:
             - name: user
-
-
-codefile:
-  - label: domain_model_user
-    struct:
-      - name: User
-
-  - label: domain_repo_user
-    interface:
-      - name: UserRepository
