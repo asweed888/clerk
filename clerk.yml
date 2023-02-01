@@ -5,20 +5,17 @@ spec:
     - name: model
       codefile:
         - name: declare
-          label: domain_model_declare
           description: |-
             宣言ファイルのデータモデル
 
     - name: repository
       codefile:
         - name: declare
-          label: domain_repo_declare
           description: |-
             宣言ファイルデータのリポジトリ
 
     - name: service
       codefile:
         - name: declare
-          label: domain_svc_declare
           description: |-
             宣言ファイルのドメインサービス
