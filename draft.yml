@@ -29,7 +29,7 @@ spec:
 
 
 
-- location: infrastructure
+- location: infra
   upstream:
     - name: persistance
       upstream:
