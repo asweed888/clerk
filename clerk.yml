@@ -19,3 +19,14 @@ spec:
         - name: declare
           description: |-
             宣言ファイルのドメインサービス
+
+
+- location: infra
+  upstream:
+    - name: persistence
+      upstream:
+        - name: datastore
+          codefile:
+            - name: declare
+              description: |-
+                宣言ファイルのデータストア
