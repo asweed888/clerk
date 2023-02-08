@@ -9,24 +9,22 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type declareRepository struct {
-    Datasource string
+type declareRepository struct {}
+
+
+func NewDeclareRepository() repository.DeclareRepository {
+    return &declareRepository{}
 }
 
 
-func NewDeclareRepository(Datasource string) repository.DeclareRepository {
-    return &declareRepository{Datasource}
-}
 
-
-
-func (r *declareRepository) Load() (*model.Declare, error) {
-    f, err := ioutil.ReadFile(r.Datasource)
+func (r *declareRepository) Load(datasource string) (*model.Declare, error) {
+    f, err := ioutil.ReadFile(datasource)
 	if err != nil {
 		return nil, fmt.Errorf(
             "ERROR: %s is not found, please create %s.",
-            r.Datasource,
-            r.Datasource,
+            datasource,
+            datasource,
         )
 	}
 
@@ -35,7 +33,7 @@ func (r *declareRepository) Load() (*model.Declare, error) {
 	if err != nil {
 		return nil, fmt.Errorf(
             "%s unmarshal failed",
-            r.Datasource,
+            datasource,
         )
 	}
 
