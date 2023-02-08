@@ -8,17 +8,20 @@ spec:
           description: |-
             宣言ファイルのデータモデル
 
+        - name: config
+          description: |-
+            書き出す言語ごとの設定
+
+
     - name: repository
       codefile:
         - name: declare
           description: |-
             宣言ファイルデータのリポジトリ
 
-    - name: service
-      codefile:
-        - name: declare
+        - name: config
           description: |-
-            宣言ファイルのドメインサービス
+            言語事の設定データのリポジトリ
 
 
 - location: infra
@@ -30,3 +33,27 @@ spec:
             - name: declare
               description: |-
                 宣言ファイルのデータストア
+
+            - name: config
+              description: |-
+                言語ごとの設定のデータストア
+
+
+- location: usecase
+  codefile:
+    - name: declare
+      description: |-
+        宣言ファイルのusecase
+
+    - name: config
+      description: |-
+        言語ごとの設定ファイルのusecase
+
+
+- location: datasources
+  upstream:
+    - name: config
+      codefile:
+        - name: golang.go
+          description: |-
+            goファイルの出力のための設定
