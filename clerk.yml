@@ -54,6 +54,6 @@ spec:
   upstream:
     - name: config
       codefile:
-        - name: golang.go
+        - name: golang
           description: |-
             goファイルの出力のための設定
