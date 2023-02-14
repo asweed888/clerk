@@ -24,8 +24,8 @@
                 <mxCell id="26" value="読み込む" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="2" vertex="1">
                     <mxGeometry y="96" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="Entity" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="28" vertex="1">
-                    <mxGeometry width="50" height="20" as="geometry"/>
+                <mxCell id="12" value="VO" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="28" vertex="1">
+                    <mxGeometry x="5" y="-5" width="40" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="29" value="" style="group" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="410" y="40" width="175" height="106" as="geometry"/>
@@ -42,8 +42,8 @@
                 <mxCell id="27" value="読み込む" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="6" vertex="1">
                     <mxGeometry y="66" width="160" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="Entity" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="29" vertex="1">
-                    <mxGeometry width="50" height="20" as="geometry"/>
+                <mxCell id="13" value="VO" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="29" vertex="1">
+                    <mxGeometry x="5" y="-5" width="40" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="32" value="仕様" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" vertex="1" parent="1">
                     <mxGeometry x="125" y="220" width="160" height="116" as="geometry"/>
