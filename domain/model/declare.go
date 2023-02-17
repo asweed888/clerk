@@ -1,9 +1,11 @@
 package model
 
+import "fmt"
+
 type Declare struct {
     Lang string `yaml:"lang"`
     Spec []*DeclareSpec
-    InternalConfig *InternalConfig
+    TacitConfig *TacitConfig
 }
 
 type DeclareSpec struct {
@@ -23,7 +25,20 @@ type DeclareCodeFile struct {
     Description string `yaml:"description"`
 }
 
-type InternalConfig struct {
+type TacitConfig struct {
     Ext string
     FilePermission string
+}
+
+
+
+/* methods */
+func (d DeclareSpec) CreateDirectory(path string) string {
+    p := fmt.Sprintf("%s/%s", path, d.Location)
+    return p
+}
+
+func (d DeclareUpstream) CreateDirectory(path string) string {
+    p := fmt.Sprintf("%s/%s", path, d.Name)
+    return p
 }

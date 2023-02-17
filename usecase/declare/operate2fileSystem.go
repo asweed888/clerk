@@ -17,6 +17,25 @@ func NewDeclareOperate2fileSystem(r repository.DeclareRepository) Operate2fileSy
     return &operate2fileSystem{r}
 }
 
-func (u *operate2fileSystem) Load(datasource string) (*model.Declare, error) {
+func (u *operate2fileSystem) load(datasource string) (*model.Declare, error) {
     return u.DeclareRepository.Load(datasource)
+}
+
+
+func (u *operate2fileSystem) GenerateArch(datasource string) {
+    decl, _ := u.load(datasource)
+
+    for _, d := range decl.Spec {
+        path := d.CreateDirectory(".")
+        generateUpstream(path, d.Upstream)
+        generateCodeFile(path, d.CodeFile)
+    }
+}
+
+func generateUpstream(path string, upstream []*model.DeclareUpstream) {
+
+}
+
+func generateCodeFile(path string, codeFile []*model.DeclareCodeFile) {
+
 }
