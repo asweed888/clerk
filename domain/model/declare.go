@@ -1,28 +1,35 @@
 package model
 
-import "fmt"
+import (
+	"fmt"
+	"io/fs"
+	"os"
+	"strconv"
+)
 
 type Declare struct {
     Lang string `yaml:"lang"`
     Spec []*DeclareSpec
-    TacitConfig *TacitConfig
 }
 
 type DeclareSpec struct {
     Location string `yaml:"location"`
     Upstream []*DeclareUpstream
     CodeFile []*DeclareCodeFile
+    TacitConfig *TacitConfig
 }
 
 type DeclareUpstream struct {
     Name string `yaml:"name"`
     Upstream []*DeclareUpstream
     CodeFile []*DeclareCodeFile
+    TacitConfig *TacitConfig
 }
 
 type DeclareCodeFile struct {
     Name string `yaml:"name"`
     Description string `yaml:"description"`
+    TacitConfig *TacitConfig
 }
 
 type TacitConfig struct {
@@ -33,12 +40,26 @@ type TacitConfig struct {
 
 
 /* methods */
-func (d DeclareSpec) CreateDirectory(path string) string {
-    p := fmt.Sprintf("%s/%s", path, d.Location)
-    return p
+
+// DeclareSpec
+func (d DeclareSpec) CreateDirectory(workdir string)
+
+func (d DeclareSpec) ChangeDirectory(prevWorkDir string) string {
+    return fmt.Sprintf("%s/%s", prevWorkDir, d.Location)
 }
 
-func (d DeclareUpstream) CreateDirectory(path string) string {
-    p := fmt.Sprintf("%s/%s", path, d.Name)
-    return p
+// DeclareUpstream
+func (d DeclareUpstream) CreateDirectory(workdir string)
+
+func (d DeclareUpstream) ChangeDirectory(prevWorkDir string) string {
+    return fmt.Sprintf("%s/%s", prevWorkDir, d.Name)
+}
+
+
+// DeclareCodeFile
+func (d DeclareCodeFile) CreateCodeFile(workdir string)
+
+func (d DeclareCodeFile) createCodeFilePermission() fs.FileMode {
+    perm32, _ := strconv.ParseUint(d.TacitConfig.FilePermission, 8, 32)
+    return os.FileMode(perm32)
 }
