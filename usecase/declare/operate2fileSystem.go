@@ -22,20 +22,42 @@ func (u *operate2fileSystem) load(datasource string) (*model.Declare, error) {
 }
 
 
-func (u *operate2fileSystem) GenerateArch(datasource string) {
+func (u *operate2fileSystem) GenerateArch(datasource string)  {
     decl, _ := u.load(datasource)
 
-    for _, d := range decl.Spec {
-        path := d.CreateDirectory(".")
-        generateUpstream(path, d.Upstream)
-        generateCodeFile(path, d.CodeFile)
+    for _, s := range decl.Spec {
+        workdir := s.ChangeDirectory(".")
+        s.CreateDirectory(workdir)
+
+        if len(s.Upstream) != 0 {
+            generateUpstream(workdir, s.Upstream)
+        }
+
+        if len(s.CodeFile) != 0 {
+            generateCodeFile(workdir, s.CodeFile)
+        }
     }
 }
 
-func generateUpstream(path string, upstream []*model.DeclareUpstream) {
+func generateUpstream(prevWorkDir string, upstream []*model.DeclareUpstream)  {
 
+    for _, u := range upstream {
+        workdir := u.ChangeDirectory(prevWorkDir)
+        u.CreateDirectory(workdir)
+
+        if len(u.Upstream) != 0 {
+            generateUpstream(workdir, u.Upstream)
+        }
+
+        if len(u.CodeFile) != 0 {
+            generateCodeFile(workdir, u.CodeFile)
+        }
+    }
 }
 
-func generateCodeFile(path string, codeFile []*model.DeclareCodeFile) {
+func generateCodeFile(workdir string, codeFile []*model.DeclareCodeFile)  {
 
+    for _, c := range codeFile {
+        c.CreateCodeFile(workdir)
+    }
 }
