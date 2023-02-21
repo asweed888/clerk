@@ -1,29 +1,25 @@
-package declare
+package usecase
 
 import (
 	"github.com/asweed888/clerk/domain/model"
 	"github.com/asweed888/clerk/domain/repository"
 )
 
-type Operate2fileSystem interface {
-    Load(datasource string) (*model.Declare, error)
+type DeclareUseCase  interface {
+    GenerateArch(datasource string)
 }
 
-type operate2fileSystem struct {
+type declareUseCase struct {
     repository.DeclareRepository
 }
 
-func NewDeclareOperate2fileSystem(r repository.DeclareRepository) Operate2fileSystem {
-    return &operate2fileSystem{r}
-}
-
-func (u *operate2fileSystem) load(datasource string) (*model.Declare, error) {
-    return u.DeclareRepository.Load(datasource)
+func NewDeclareUseCase(r repository.DeclareRepository) DeclareUseCase {
+    return &declareUseCase{r}
 }
 
 
-func (u *operate2fileSystem) GenerateArch(datasource string)  {
-    decl, _ := u.load(datasource)
+func (u *declareUseCase) GenerateArch(datasource string)  {
+    decl, _ := u.DeclareRepository.Load(datasource)
 
     for _, s := range decl.Spec {
         workdir := s.ChangeDirectory(".")
