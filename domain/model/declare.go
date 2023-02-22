@@ -16,27 +16,18 @@ type DeclareSpec struct {
     Location string `yaml:"location"`
     Upstream []*DeclareUpstream
     CodeFile []*DeclareCodeFile
-    TacitConfig *TacitConfig
 }
 
 type DeclareUpstream struct {
     Name string `yaml:"name"`
     Upstream []*DeclareUpstream
     CodeFile []*DeclareCodeFile
-    TacitConfig *TacitConfig
 }
 
 type DeclareCodeFile struct {
     Name string `yaml:"name"`
     Description string `yaml:"description"`
-    TacitConfig *TacitConfig
 }
-
-type TacitConfig struct {
-    Ext string
-    FilePermission string
-}
-
 
 
 /* methods */

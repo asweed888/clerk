@@ -6,7 +6,7 @@ import (
 )
 
 type DeclareUseCase  interface {
-    GenerateArch(datasource string)
+    GenerateArch()
 }
 
 type declareUseCase struct {
@@ -18,8 +18,8 @@ func NewDeclareUseCase(r repository.DeclareRepository) DeclareUseCase {
 }
 
 
-func (u *declareUseCase) GenerateArch(datasource string)  {
-    decl, _ := u.DeclareRepository.Load(datasource)
+func (u *declareUseCase) GenerateArch()  {
+    decl, _ := u.DeclareRepository.Load()
 
     for _, s := range decl.Spec {
         workdir := s.ChangeDirectory(".")

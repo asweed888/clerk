@@ -9,7 +9,7 @@ var Version string
 
 var commands = []*cobra.Command{
     cmd.Build,
-    cmd.Watch,
+    // cmd.Watch,
 }
 
 func main(){

@@ -10,22 +10,24 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type declareRepository struct {}
+type declareRepository struct {
+    DeclareFile string
+}
 
 
-func NewDeclareRepository() repository.DeclareRepository {
-    return &declareRepository{}
+func NewDeclareRepository(declareFile string) repository.DeclareRepository {
+    return &declareRepository{declareFile}
 }
 
 
 
-func (r *declareRepository) Load(datasource string) (*model.Declare, error) {
-    f, err := ioutil.ReadFile(datasource)
+func (r *declareRepository) Load() (*model.Declare, error) {
+    f, err := ioutil.ReadFile(r.DeclareFile)
 	if err != nil {
 		return nil, fmt.Errorf(
             "ERROR: %s is not found, please create %s.",
-            datasource,
-            datasource,
+            r.DeclareFile,
+            r.DeclareFile,
         )
 	}
 
@@ -34,16 +36,13 @@ func (r *declareRepository) Load(datasource string) (*model.Declare, error) {
 	if err != nil {
 		return nil, fmt.Errorf(
             "%s unmarshal failed",
-            datasource,
+            r.DeclareFile,
         )
 	}
 
-    conf, err := internalConfigLoad(declare.Lang)
     if err != nil {
         return nil, fmt.Errorf("Failed to load the config")
     }
-
-    declare.TacitConfig = conf
 
 	return declare, nil
 }
