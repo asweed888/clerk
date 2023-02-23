@@ -6,7 +6,7 @@ import (
 )
 
 type DeclareUseCase  interface {
-    GenerateArch()
+    GenerateArch(tacitConfig *model.TacitConfig)
 }
 
 type declareUseCase struct {
@@ -18,8 +18,9 @@ func NewDeclareUseCase(r repository.DeclareRepository) DeclareUseCase {
 }
 
 
-func (u *declareUseCase) GenerateArch()  {
+func (u *declareUseCase) GenerateArch(tacitConfig *model.TacitConfig)  {
     decl, _ := u.DeclareRepository.Load()
+    decl.SetTacitConfig(tacitConfig)
 
     for _, s := range decl.Spec {
         workdir := s.ChangeDirectory(".")
