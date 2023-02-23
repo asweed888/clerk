@@ -44,11 +44,17 @@ func (r *declareRepository) Load() (*model.Declare, error) {
         return nil, fmt.Errorf("Failed to load the config")
     }
 
+    conf, err := loadTacitConfig(declare.Lang)
+    if err != nil {
+        return nil, fmt.Errorf("Failed to load the config")
+    }
+
+    declare.TacitConfig = conf
+
 	return declare, nil
 }
 
-
-func internalConfigLoad(lang string) (*model.TacitConfig, error) {
+func loadTacitConfig(lang string) (*model.TacitConfig, error){
     switch lang {
     case "go":
         return config.Golang, nil
