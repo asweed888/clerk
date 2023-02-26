@@ -6,7 +6,7 @@ import (
 )
 
 type DeclareUseCase  interface {
-    GenerateArch(tacitConfig *model.TacitConfig)
+    GenerateArch() error
 }
 
 type declareUseCase struct {
@@ -18,43 +18,46 @@ func NewDeclareUseCase(r repository.DeclareRepository) DeclareUseCase {
 }
 
 
-func (u *declareUseCase) GenerateArch(tacitConfig *model.TacitConfig)  {
+func (u *declareUseCase) GenerateArch() error {
     decl, _ := u.DeclareRepository.Load()
-    decl.SetTacitConfig(tacitConfig)
 
     for _, s := range decl.Spec {
         workdir := s.ChangeDirectory(".")
         s.CreateDirectory(workdir)
 
         if len(s.Upstream) != 0 {
-            generateUpstream(workdir, s.Upstream)
+            if err := generateUpstream(workdir, s.Upstream); err != nil { return err }
         }
 
         if len(s.CodeFile) != 0 {
-            generateCodeFile(workdir, s.CodeFile)
+            if err := generateCodeFile(workdir, s.CodeFile); err != nil { return err }
         }
     }
+
+    return nil
 }
 
-func generateUpstream(prevWorkDir string, upstream []*model.DeclareUpstream)  {
+func generateUpstream(prevWorkDir string, upstream []*model.DeclareUpstream) error {
 
     for _, u := range upstream {
         workdir := u.ChangeDirectory(prevWorkDir)
         u.CreateDirectory(workdir)
 
         if len(u.Upstream) != 0 {
-            generateUpstream(workdir, u.Upstream)
+            if err := generateUpstream(workdir, u.Upstream); err != nil { return err }
         }
 
         if len(u.CodeFile) != 0 {
-            generateCodeFile(workdir, u.CodeFile)
+            if err := generateCodeFile(workdir, u.CodeFile); err != nil { return err }
         }
     }
+    return nil
 }
 
-func generateCodeFile(workdir string, codeFile []*model.DeclareCodeFile)  {
+func generateCodeFile(workdir string, codeFile []*model.DeclareCodeFile) error {
 
     for _, c := range codeFile {
         c.CreateCodeFile(workdir)
     }
+    return nil
 }

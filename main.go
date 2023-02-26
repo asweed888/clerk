@@ -1,18 +1,18 @@
 package main
 
 import (
-	"github.com/asweed888/clerk/cmd"
+	"github.com/asweed888/clerk/interactor"
 	"github.com/spf13/cobra"
 )
 
 var Version string
 
-var commands = []*cobra.Command{
-    cmd.Build,
-    // cmd.Watch,
-}
 
 func main(){
+
+    i := interactor.NewInteractor("./clerk.yml")
+    subcmd := i.NewSubCommand()
+
 
     app := &cobra.Command{
         Use: "clerk",
@@ -20,6 +20,6 @@ func main(){
         Version: Version,
     }
 
-    app.AddCommand(commands...)
+    app.AddCommand(subcmd.BuildCmd())
     app.Execute()
 }
