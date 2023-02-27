@@ -1,4 +1,4 @@
-package adapter
+package presentation
 
 import (
 	"github.com/asweed888/clerk/usecase"

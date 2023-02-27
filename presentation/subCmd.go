@@ -1,4 +1,4 @@
-package adapter
+package presentation
 
 type SubCommand interface {
     BuildCommand
