@@ -23,7 +23,7 @@ func (u *declareUseCase) GenerateArch() error {
 
     for _, s := range decl.Spec {
         workdir := s.ChangeDirectory(".")
-        s.CreateDirectory(workdir)
+        if err := s.CreateDirectory(workdir); err != nil { return err }
 
         if len(s.Upstream) != 0 {
             if err := generateUpstream(workdir, s.Upstream); err != nil { return err }
@@ -41,7 +41,7 @@ func generateUpstream(prevWorkDir string, upstream []*model.DeclareUpstream) err
 
     for _, u := range upstream {
         workdir := u.ChangeDirectory(prevWorkDir)
-        u.CreateDirectory(workdir)
+        if err := u.CreateDirectory(workdir); err != nil { return err }
 
         if len(u.Upstream) != 0 {
             if err := generateUpstream(workdir, u.Upstream); err != nil { return err }
