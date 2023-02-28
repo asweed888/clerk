@@ -49,15 +49,25 @@ func (r *declareRepository) Load() (*model.Declare, error) {
         return nil, fmt.Errorf("Failed to load the config")
     }
 
+    conf.Lang = declare.Lang
     declare.TacitConfig = conf
 
 	return declare, nil
 }
 
+
 func loadTacitConfig(lang string) (*model.TacitConfig, error){
     switch lang {
     case "go":
         return config.Golang, nil
+    case "rust":
+        return config.Rust, nil
+    case "bash":
+        return config.Bash, nil
+    case "typescript":
+        return config.TypeScript, nil
+    case "python":
+        return config.Python, nil
     default:
         return nil, fmt.Errorf("Invalid language designation")
     }
