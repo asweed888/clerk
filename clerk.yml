@@ -1,13 +1,10 @@
-lang: go
+lang: bash
 spec:
-- location: _test
-  codefile:
-    - name: mod
+- location: _test1
   upstream:
-    - name: sample1
-      codefile:
-        - name: mod
+    - name: v1
       upstream:
-        - name: sample1_demo1
+        - name: cmd
           codefile:
-            - name: mod
+            - name: greet_english
+            - name: greet_japanese
