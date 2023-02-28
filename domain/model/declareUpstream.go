@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"os"
 )
 
 type DeclareUpstream struct {
@@ -13,9 +12,7 @@ type DeclareUpstream struct {
 }
 
 func (d *DeclareUpstream) CreateDirectory(workdir string) error {
-    if err := os.MkdirAll(workdir, os.ModePerm); err != nil { return err }
-
-    return nil
+    return createDirectory(workdir)
 }
 
 func (d *DeclareUpstream) ChangeDirectory(prevWorkDir string) string {

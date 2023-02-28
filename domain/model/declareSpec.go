@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"os"
 )
 
 type DeclareSpec struct {
@@ -13,9 +12,7 @@ type DeclareSpec struct {
 }
 
 func (d *DeclareSpec) CreateDirectory(workdir string) error {
-    if err := os.MkdirAll(workdir, os.ModePerm); err != nil { return err }
-
-    return nil
+    return createDirectory(workdir)
 }
 
 func (d *DeclareSpec) ChangeDirectory(prevWorkDir string) string {
