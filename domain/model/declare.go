@@ -35,6 +35,9 @@ func (c *TacitConfig) CodeFileFullPath(path string, fname string) string {
 }
 
 func (c *TacitConfig) InitialFileContents(path string, fname string) string {
+    if c.ImplInitialFileContents == nil {
+        return ""
+    }
     return c.ImplInitialFileContents(c, path, fname)
 }
 
