@@ -1,6 +1,8 @@
 package presentation
 
 import (
+	"log"
+
 	"github.com/asweed888/clerk/usecase"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +25,12 @@ func (c *buildCommand) BuildCmd() *cobra.Command {
         Aliases: []string{"generate", "gen", "b", "g"},
         Short: "The package is generated based on the specifications written in clerk.yml.",
         RunE: func(cmd *cobra.Command, args []string) error {
-            c.DeclareUseCase.GenerateArch()
+            err := c.DeclareUseCase.GenerateArch()
+            if err != nil {
+                return err
+            }
+
+            log.Println("generate of clerk has been completed.")
             return nil
         },
     }

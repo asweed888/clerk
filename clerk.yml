@@ -1,10 +1,15 @@
-lang: bash
+lang: typescript
 spec:
 - location: _test1
   upstream:
-    - name: v1
+    - name: domain
       upstream:
-        - name: cmd
+        - name: model
           codefile:
-            - name: greet_english
-            - name: greet_japanese
+            - name: user
+            - name: book
+
+        - name: repository
+          codefile:
+            - name: user_repository
+            - name: book_repository
