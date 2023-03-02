@@ -1,4 +1,5 @@
-lang: typescript
+lang: go
+arch: ddd
 spec:
 - location: _test1
   upstream:
