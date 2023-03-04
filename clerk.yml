@@ -1,4 +1,5 @@
-lang: typescript
+lang: go
+arch: ddd
 spec:
 - location: _test1
   upstream:
@@ -11,5 +12,21 @@ spec:
 
         - name: repository
           codefile:
-            - name: user_repository
-            - name: book_repository
+            - name: user
+            - name: book
+
+
+    - name: infra
+      upstream:
+        - name: persistence
+          upstream:
+            - name: datastore
+              codefile:
+                - name: user
+                - name: book
+
+
+    - name: usecase
+      codefile:
+        - name: user
+        - name: book

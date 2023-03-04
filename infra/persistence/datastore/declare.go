@@ -50,6 +50,7 @@ func (r *declareRepository) Load() (*model.Declare, error) {
     }
 
     conf.Lang = declare.Lang
+    conf.Arch = declare.Arch
     declare.TacitConfig = conf
 
 	return declare, nil
