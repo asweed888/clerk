@@ -1,48 +1,84 @@
 package config
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/asweed888/clerk/domain/model"
 )
 
-type golang struct {
-    Config *model.TacitConfig
-    Path string
-    Fname string
+type golangUtils struct {
+    utils
 }
+
 
 var Golang = &model.TacitConfig{
     Ext: "go",
     FileModeStr: "0644",
     ImplInitialFileContents: func(c *model.TacitConfig, path string, fname string) string {
-        nativeData := golang{c, path, fname}
 
-        if isDomainModel(c, path) {
-            return nativeData.DomainModelFileContents()
-        } else if isDomainRepository(c, path) {
-            return nativeData.DomainRepositoryFileContents()
+        ut := &golangUtils{utils{c, path, fname}}
+
+        if ut.IsDomainModel() {
+            return ut.DomainModelFileContents()
+        } else if ut.IsDomainRepository() {
+            return ut.DomainRepositoryFileContents()
+        } else if ut.IsInfra() {
+            return ut.InfraFileContents()
+        } else if ut.IsUseCase() {
+            return ut.UseCaseFileContents()
+        } else {
+            return ut.DefaultFileContents()
         }
-
-        return fmt.Sprintf("package %s", pkgname(path))
     },
 }
 
 
-func (s *golang) DomainModelFileContents() string {
-    tmpl := `package %s
+func (u *golangUtils) DomainModelFileContents() string {
+    tmpl := `package {{ .Pkgname }}
 
-type %s struct {}`
+type {{ .Fname | ToTitle }} struct {}`
 
-    return fmt.Sprintf(tmpl, pkgname(s.Path), strings.Title(s.Fname))
+
+    return u.utils.CodeFileContents(tmpl)
 }
 
 
-func (s *golang) DomainRepositoryFileContents() string {
-    tmpl := `package %s
+func (u *golangUtils) DomainRepositoryFileContents() string {
+    tmpl := `package {{ .Pkgname }}
 
-type %sRepository interface {}`
+type {{ .Fname | ToTitle }}Repository interface {}`
 
-    return fmt.Sprintf(tmpl, pkgname(s.Path), strings.Title(s.Fname))
+    return u.utils.CodeFileContents(tmpl)
+}
+
+func (u *golangUtils) InfraFileContents() string {
+    tmpl := `package {{ .Pkgname }}
+
+type {{ .Fname }}Repository struct {}
+
+func New{{ .Fname | ToTitle }}Repository() repository.{{ .Fname | ToTitle }}Repository {
+    return &{{ .Fname }}Repository{}
+}`
+
+    return u.utils.CodeFileContents(tmpl)
+}
+
+
+func (u *golangUtils) UseCaseFileContents() string {
+    tmpl := `package {{ .Pkgname }}
+
+type {{ .Fname | ToTitle }}UseCase interface {}
+
+type {{ .Fname }}UseCase struct {
+    repository.{{ .Fname | ToTitle }}Repository
+}
+
+func New{{ .Fname | ToTitle }}UseCase(r repository.{{ .Fname | ToTitle }}Repository) {{ .Fname | ToTitle }}UseCase {
+    return &{{ .Fname }}UseCase{r}
+}`
+
+    return u.utils.CodeFileContents(tmpl)
+}
+
+func (u *golangUtils) DefaultFileContents() string {
+    tmpl := `package {{ .Pkgname }}`
+    return u.utils.CodeFileContents(tmpl)
 }

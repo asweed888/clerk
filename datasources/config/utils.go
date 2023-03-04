@@ -1,51 +1,91 @@
 package config
 
 import (
-	"io/ioutil"
-	"os"
+	"bytes"
+	"html/template"
 	"strings"
 
 	"github.com/asweed888/clerk/domain/model"
 )
 
-func pkgname(path string) string {
-    idx := strings.LastIndexByte(path, '/') + 1
-    return path[idx:]
+type Utils interface {
+    Pkgname() string
+    IsDDD() bool
+    IsDomainModel() bool
+    IsDomainRepository() bool
+    IsInfra() bool
+    IsUseCase() bool
+    IsPresentation() bool
+    CodeFileContents(tmplStr string) string
+    codeFileContentsValues() map[string]interface{}
+}
+
+type utils struct {
+    Config *model.TacitConfig
+    Path string
+    Fname string
 }
 
 
-func isDDD(c *model.TacitConfig) bool {
-    return c.Arch == "ddd"
+func (u *utils) Pkgname() string {
+    idx := strings.LastIndexByte(u.Path, '/') + 1
+    return u.Path[idx:]
 }
 
-func isDomainModel(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/domain/model")
+
+func (u *utils) IsDDD() bool {
+    return  u.Config.Arch == "ddd"
 }
 
-func isDomainRepository(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/domain/repository")
+func (u *utils) IsDomainModel() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/domain/model")
 }
 
-func isDomainService(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/domain/service")
+func (u *utils) IsDomainRepository() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/domain/repository")
 }
 
-func isInfra(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/infra")
+func (u *utils) IsDomainService() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/domain/service")
 }
 
-func isUseCase(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/usecase")
+func (u *utils) IsInfra() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/infra")
 }
 
-func isPresentation(c *model.TacitConfig, path string) bool {
-    return isDDD(c) && strings.Contains(path, "/presentation")
+func (u *utils) IsUseCase() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/usecase")
 }
 
-func isContains2Codefile(codeFileFullPath string, targetStr string) bool {
-    file, _ := os.Open(codeFileFullPath)
-    defer file.Close()
+func (u *utils) IsPresentation() bool {
+    return u.IsDDD() && strings.Contains(u.Path, "/presentation")
+}
 
-    b, _ := ioutil.ReadAll(file)
-    return strings.Contains(string(b), targetStr)
+
+func (u *utils) CodeFileContents(tmplStr string) string {
+    var re bytes.Buffer
+    funcMap := template.FuncMap{
+        "ToTitle": strings.Title,
+    }
+
+    tmpl, err := template.New("clerk").Funcs(funcMap).Parse(tmplStr)
+    if err != nil {
+        return ""
+    }
+
+    err = tmpl.Execute(&re, u.codeFileContentsValues()) // 置換して標準出力へ
+	if err != nil {
+		return ""
+	}
+
+
+	return re.String()
+
+}
+
+func (u *utils) codeFileContentsValues() map[string]interface{} {
+    return map[string]interface{}{
+        "Pkgname": u.Pkgname(),
+        "Fname": u.Fname,
+    }
 }
