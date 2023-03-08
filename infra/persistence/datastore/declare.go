@@ -65,6 +65,8 @@ func loadTacitConfig(lang string) (*model.TacitConfig, error){
         return config.Rust, nil
     case "bash":
         return config.Bash, nil
+    case "javascript":
+        return config.JavaScript, nil
     case "typescript":
         return config.TypeScript, nil
     case "python":
