@@ -71,6 +71,8 @@ func loadTacitConfig(lang string) (*model.TacitConfig, error){
         return config.TypeScript, nil
     case "python":
         return config.Python, nil
+    case "nim":
+        return config.Nim, nil
     default:
         return nil, fmt.Errorf("Invalid language designation")
     }
