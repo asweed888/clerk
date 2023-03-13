@@ -1,5 +1,4 @@
-lang: go
-arch: ddd
+lang: nim
 spec:
 - location: _test1
   upstream:
