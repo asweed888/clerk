@@ -1,4 +1,4 @@
-lang: nim
+lang: lua
 spec:
 - location: _test1
   upstream:
