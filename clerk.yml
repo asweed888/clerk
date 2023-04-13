@@ -1,4 +1,4 @@
-lang: lua
+lang: v
 spec:
 - location: _test1
   upstream:
