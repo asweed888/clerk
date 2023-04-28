@@ -20,7 +20,7 @@ brew tap asweed888/homebrew-clerk
 brew install clerk
 ```
 
-** for Linux**
+** for Linux **
 
 ```
 sudo curl -L https://github.com/asweed888/clerk/releases/download/{Any version}/clerk_linux_x86_64.tar.gz -o - | tar -xzvf - && sudo mv ./clerk /bin
