@@ -61,6 +61,11 @@ func (u *utils) IsPresentation() bool {
     return u.IsDDD() && strings.Contains(u.Path, "/presentation")
 }
 
+func (u *utils) IsDi() bool {
+    return u.IsDDD() && u.Pkgname() == "di"
+}
+
+
 
 func (u *utils) CodeFileContents(tmplStr string) string {
     var re bytes.Buffer
