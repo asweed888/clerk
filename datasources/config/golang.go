@@ -24,6 +24,10 @@ var Golang = &model.TacitConfig{
             return ut.InfraFileContents()
         } else if ut.IsUseCase() {
             return ut.UseCaseFileContents()
+        } else if ut.IsPresentation() {
+            return ut.PresentationFileContents()
+        } else if ut.IsDi() {
+            return ut.DiFileContents()
         } else {
             return ut.DefaultFileContents()
         }
@@ -76,6 +80,40 @@ func New{{ .Fname | ToTitle }}UseCase(r repository.{{ .Fname | ToTitle }}Reposit
 }`
 
     return u.utils.CodeFileContents(tmpl)
+}
+
+func (u *golangUtils) PresentationFileContents() string {
+    tmpl := `package {{ .Pkgname }}
+
+type {{ .Fname | ToTitle }}{{ .Pkgname | ToTitle }} interface {}
+
+type {{ .Fname }}{{ .Pkgname | ToTitle }} struct {
+    usecase.{{ .Fname | ToTitle }}UseCase
+}
+
+func New{{ .Fname | ToTitle }}{{ .Pkgname | ToTitle }}(u usecase.{{ .Fname | ToTitle }}UseCase) {{ .Fname | ToTitle }}{{ .Pkgname | ToTitle }} {
+    return &{{ .Fname }}{{ .Pkgname | ToTitle }}{u}
+}`
+
+	if u.Fname == "app" || u.Fname == "mod" {
+		return u.DefaultFileContents()
+	} else {
+		return u.utils.CodeFileContents(tmpl)
+	}
+}
+
+func (u *golangUtils) DiFileContents() string {
+	tmpl := `package di
+
+type DiContainer interface {}
+
+type diContainer struct {}
+
+func NewDiContainer() DiContainer {
+	return &diContainer{}
+}`
+
+	return tmpl
 }
 
 func (u *golangUtils) DefaultFileContents() string {

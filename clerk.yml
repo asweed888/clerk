@@ -1,4 +1,5 @@
-lang: v
+lang: go
+arch: ddd
 spec:
 - location: _test1
   upstream:
@@ -15,7 +16,7 @@ spec:
             - name: book
 
 
-    - name: infra
+    - name: infrastructure
       upstream:
         - name: persistence
           upstream:
@@ -29,3 +30,19 @@ spec:
       codefile:
         - name: user
         - name: book
+
+
+    - name: presentation
+      upstream:
+        - name: http
+          upstream:
+            - name: handler
+              codefile:
+                - name: mod
+                - name: user
+                - name: book
+
+
+    - name: di
+      codefile:
+        - name: mod
